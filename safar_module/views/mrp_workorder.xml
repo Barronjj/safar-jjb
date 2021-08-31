@@ -1,0 +1,40 @@
+<odoo>
+    <record model="ir.ui.view" id="s_mrp_production_workorder_form_view_inherit">
+        <field name="name">Safar.mrp.production.workorder.form.view.inherit</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='time_ids']/tree[1]/field[@name='user_id']" position="after">
+                <field name="s_operateur" string="Opérateur"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/tree[1]/field[@name='duration']"  position="after">
+                <field name="s_qte_realisee" string="Qté Réalisée"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/tree[1]/field[@name='duration']"  position="before">
+                <field name="s_uo_qte"/>
+                <field name="s_duration_expected" widget="float_time" sum="Total duration"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/tree[1]/field[@name='loss_id']" position="after">
+                <field name="s_commentaire" string="Commentaire"/>
+            </xpath>
+
+            <xpath expr="//field[@name='time_ids']/form[1]/group[1]/group[2]/field[@name='user_id']" position="after">
+                <field name="s_operateur" string="Opérateur"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/form[1]/group[1]/group[1]/field[@name='duration']" position="after">
+                <field name="s_qte_realisee" string="Qté Réalisée"/>
+            </xpath>
+            <xpath expr="//field[@name='time_ids']/form[1]/group[1]/group[2]/field[@name='loss_id']" position="after">
+                <field name="s_commentaire" string="Commentaire"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="safar_productivity_loss_action">
+        <field name="name">Raisons de la perte</field>
+        <field name="res_model">mrp.workcenter.productivity.loss</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="safar_productivity_loss_action_menu" name="Raisons de la perte" parent="mrp.menu_mrp_configuration" action="safar_productivity_loss_action" sequence="140"/>
+</odoo>

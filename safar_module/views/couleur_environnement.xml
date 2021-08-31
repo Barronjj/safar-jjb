@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--On change les couleurs de l'environnement pour bien visualiser que l'on est sur l'environnement de TEST-->
+    <!--App switcher page-->
+<!--    <template id="s_custom_color_app_page" inherit_id="web_studio.assets_backend">-->
+<!--    <record model="ir.ui.view" id="s_custom_color_app_page">-->
+<!--        <field name="name">Safar.color_environnement_app_page</field>-->
+<!--        <field name="inherit_id" ref="web_studio.assets_backend"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="." position="inside">-->
+<!--                <t t-if="request.db[:21] != 'barronjj-safar-master'">-->
+<!--                    <style>-->
+<!--                      &lt;!&ndash;#CC0000 est la couleur principale : rouge&ndash;&gt;-->
+<!--                      &lt;!&ndash;#990000 est la couleur de survol : rouge sombre&ndash;&gt;-->
+<!--                      .o_main_navbar {background-color: #CC0000;border-bottom: 0px;}-->
+<!--                      .o_main_navbar .show .dropdown-toggle {background-color: #CC0000;}-->
+<!--                      .o_main_navbar > ul > li > a:hover, .o_main_navbar-->
+<!--                                     > ul > li > label:hover {background-color: #990000;}-->
+<!--                      .o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar-->
+<!--                                     > button:hover, .o_main_navbar-->
+<!--                                     > button:focus {background-color: #990000;color: inherit;}-->
+<!--                      .o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar-->
+<!--                                     > button:hover, .o_main_navbar-->
+<!--                                     > button:focus {background-color: #990000;color: inherit;}-->
+<!--                    </style>-->
+<!--                </t>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    </template>-->
+
+    <!--Barre de navigation-->
+<!--    <template id="s_custom_color_nav_bar" inherit_id="web.layout">-->
+    <record model="ir.ui.view" id="s_custom_color_nav_bar">
+        <field name="name">Safar.color_environnement_nav_bar</field>
+        <field name="inherit_id" ref="web.layout"/>
+        <field name="arch" type="xml">
+            <body t-att-class="body_classname" position="inside">
+                <t t-if="request.db[:21] != 'barronjj-safar-master'">
+                  <style>
+                     <!--#CC0000 est la couleur principale : rouge-->
+                     <!--#990000 est la couleur de survol : rouge sombre-->
+                    .o_main_navbar {background-color: #CC0000;border-bottom: 0px;}
+                    .o_main_navbar .show .dropdown-toggle {background-color: #CC0000;}
+                    .o_main_navbar > ul > li > a:hover, .o_main_navbar
+                                   > ul > li > label:hover {background-color: #990000;}
+                    .o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar
+                                   > button:hover, .o_main_navbar
+                                   > button:focus {background-color: #990000;color: inherit;}
+                    .o_main_navbar > a:hover, .o_main_navbar > a:focus, .o_main_navbar
+                                   > button:hover, .o_main_navbar
+                                   > button:focus {background-color: #990000;color: inherit;}
+                  </style>
+                </t>
+            </body>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<odoo>
+    <record model="ir.ui.view" id="Safar_purchase_order_form">
+        <field name="name">Safar.purchase_order_form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!--On empêche la création ou modification de client via les options du Many2one-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+
+            <!--On empêche la création ou modification de produit via les options du Many2one-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='order_line']/tree[1]/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

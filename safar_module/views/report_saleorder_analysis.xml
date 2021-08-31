@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_report_view_dashboard_inherit">
+            <field name="name">safar_sale_report_view_dashboard</field>
+            <field name="model">sale.report</field>
+            <field name="priority">999</field>
+            <field name="inherit_id" ref="sale_enterprise.sale_report_view_dashboard" />
+            <field name="type">dashboard</field>
+            <field name="arch" type="xml">
+                <xpath expr="//aggregate[@name='price_subtotal_confirmed_orders']" position="attributes">
+                    <attribute name="string">Ventes totales TTC</attribute>
+                </xpath>
+                <xpath expr="//formula[@name='total']" position="attributes">
+                    <attribute name="string">Commande moyenne TTC</attribute>
+                </xpath>
+                <xpath expr="//aggregate[@name='price_subtotal_confirmed_orders']" position="after">
+                    <aggregate name="mt_ht_apres_remise_importateur" string="HT après remise importateur" field="s_report_mt_ht_apres_remise_importateur" widget="monetary"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_order_product_graph_inherit">
+            <field name="name">safar_view_order_product_graph</field>
+            <field name="model">sale.report</field>
+            <field name="priority">999</field>
+            <field name="inherit_id" ref="sale.view_order_product_graph" />
+            <field name="type">dashboard</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_subtotal']" position="after">
+                    <field name="s_report_mt_ht_apres_remise_importateur" type="measure"/>
+                </xpath>
+                <xpath expr="//field[@name='price_subtotal']" position="replace"/>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="sale_report_view_pivot_inherit">
+            <field name="name">safar_sale_report_view_pivot</field>
+            <field name="model">sale.report</field>
+            <field name="priority">999</field>
+            <field name="inherit_id" ref="sale_enterprise.sale_report_view_pivot" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='price_total']" position="after">
+                    <field name="s_report_mt_ht_apres_remise_importateur" type="measure"/>
+                </xpath>
+                <xpath expr="//field[@name='price_subtotal']" position="replace"/>
+                <xpath expr="//field[@name='price_total']" position="replace"/>
+            </field>
+        </record>
+    </data>
+</odoo>

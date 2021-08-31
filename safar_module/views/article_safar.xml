@@ -1,0 +1,11 @@
+<odoo>
+    <record model="ir.actions.act_window" id="articles_list_action">
+        <field name="name">Articles</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <menuitem id="safar_article_main_menu" name="Articles"/>
+    <menuitem id="safar_article_menu" name="Articles" parent="safar_article_main_menu" action="articles_list_action"/>
+    <menuitem id="safar_article_configuration_menu" name="Configuration" parent="safar_article_main_menu"/>
+</odoo>

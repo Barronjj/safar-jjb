@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_delai_fabrication_tree">
+        <field name="name">Safar.s_delai_fabrication_tree</field>
+        <field name="model">s_delai_fabrication</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="s_cd_delai"/>
+                <field name="s_duree_jr"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="safar_delai_fabrication_action">
+        <field name="name">Tâches opérateurs</field>
+        <field name="res_model">s_delai_fabrication</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="safar_delai_fabrication_action_menu" name="Familles Délais Fabrication" parent="mrp.menu_mrp_configuration" action="safar_delai_fabrication_action" sequence="141"/>
+</odoo>

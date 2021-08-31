@@ -1,0 +1,244 @@
+<odoo>
+    <record model="ir.ui.view" id="product_modif_form_view">
+         <field name="name">Safar.product.template.form</field>
+         <field name="model">product.template</field>
+         <field name="inherit_id" ref="product.product_template_only_form_view"/>
+         <field name="arch" type="xml">
+
+              <xpath expr="//field[@name='categ_id']" position="after">
+                <field name="s_article_marche" string="Marché"/>
+              </xpath>
+              <xpath expr="//field[@name='barcode']" position="after">
+                <field name="s_gabarit_materiau" string="Gabarit / Matériau" widget="radio"/>
+                <field name="s_type_matiere" string="Type matière" widget="radio" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_nomenclature_douaniere" string="Nomenclature douanière"/>
+              </xpath>
+              <xpath expr="//field[@name='route_ids']" position="after">
+                  <field name="s_unite_oeuvre" string="Unité d'oeuvre"/>
+              </xpath>
+             <xpath expr="//label[@for='sale_delay']" position="before">
+                  <field name="s_cd_delai_fabrication" string="Famille délai de fabrication"/>
+              </xpath>
+              <xpath expr="//form[@name='Product Template']/sheet[1]/notebook[1]" position="inside">
+                <page name="studio_page_E0eHs" string="Matériau" attrs="{'invisible': [('s_gabarit_materiau','!=','mat'),('s_gabarit_materiau','!=','fil')]}">
+                  <group name="studio_group_E0eHs">
+                    <group name="studio_group_E0eHs_left">
+                        <field name="s_laize_cm" string="Laize (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_laize_utile" string="Laize utile (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_laize_utile_bis" string="Laize utile bis (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_accompagnement" string="Accompagnement" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_partie_centrale" string="Partie Centrale" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_ajouter_mousse" string="Ajouter de la mousse" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                        <field name="s_dispo_configurateur" string="disponible dans le configurateur"/>
+                        <field name="s_dispo_simulateur" string="disponible dans le simulateur"/>
+                        <field name="s_nom_simulateur" string="Nom d'affichage"/>
+                    </group>
+                    <group name="studio_group_E0eHs_right">
+                      <field name="s_univers_autorises" string="Univers autorisés">
+                        <tree string="univers_gabarit" editable="top">
+                          <field name="s_univers"/>
+                        </tree>
+                      </field>
+                    </group>
+                  </group>
+                </page>
+                <page name="studio_page_qRvV0" string="Dimensions" attrs="{'invisible': [('s_gabarit_materiau','!=','gab')]}">
+                  <group name="studio_group_qRvV0">
+                    <group name="studio_group_qRvV0_left">
+                      <field name="s_poids" string="Poids"/>
+                      <field name="s_longueur_cm" string="Longueur (cm)"/>
+                      <field name="s_largeur_cm" string="Largeur (cm)"/>
+                      <field name="s_hauteur_cm" string="Hauteur( cm)"/>
+                      <field name="s_categorie_pdr" string="Catégorie PDR"/>
+                    </group>
+                    <group name="studio_group_qRvV0_right">
+                      <field name="s_colisage" string="Colisage"/>
+                      <field name="s_etiquette_airbag_ct" string="Etiquette Airbag côté"/>
+                      <field name="s_etiquette_consigne" string="Etiquette Consigne"/>
+                    </group>
+                  </group>
+                </page>
+                <!--<page name="studio_page_a6rc7" string="Caractéristiques" attrs="{'invisible': [('s_gabarit_materiau','!=','gab')]}">
+                  <group name="studio_group_a6rc7">
+                    <field name="s_tab_caract_gabarit_val" string="Caractéristiques" editable="top"/>
+                  </group>
+                </page>
+                <page name="studio_page_tekSg" string="Réf. Client" attrs="{'invisible': [('s_gabarit_materiau','!=','gab')]}">
+                  <group name="studio_group_tekSg">
+                    <field name="s_tab_references_client" string="Références Client">
+                      <tree string="produit_client" editable="top">
+                        <field name="s_client"/>
+                        <field name="s_cd_produit" string="Réf. article pour le client"/>
+                        <field name="s_name" modifiers="{}" string="Libellé de l'article pour le client"/>
+                      </tree>
+                    </field>
+                  </group>
+                </page>
+                <page name="studio_page_4W84E" string="Réf. Lectra" attrs="{'invisible': [('s_gabarit_materiau','!=','gab')]}">
+                  <group name="studio_group_4W84E">
+                    <field name="s_tab_ref_lectra" string="Réf. Lectra">
+                      <tree string="gabarit_lectra" editable="top">
+                        <field name="s_name" modifiers="{}" string="Référence Lectra"/>
+                        <field name="s_metrage"/>
+                        <field name="s_quantite"/>
+                      </tree>
+                    </field>
+                  </group>
+                </page>
+                <page name="" string="Véhicules" attrs="{'invisible': [('s_gabarit_materiau','!=','gab')]}">
+                  <group name="">
+                    <field name="s_vehicules" string="Véhicules" editable="top">
+                      <tree string="">
+                        <field name="s_vehicule" string="Nom"/>
+                      </tree>
+                    </field>
+                  </group>
+                </page>-->
+                <page name="studio_page_3dS0Q" string="Docs">
+                  <group name="studio_group_3dS0Q">
+                    <group name="studio_group_3dS0Q_left"/>
+                    <group name="studio_group_3dS0Q_right"/>
+                  </group>
+                </page>
+<!--                <page name="studio_page_0tnL4" string="Photos">-->
+<!--                  <group name="studio_group_0tnL4">-->
+<!--                    <field name="s_tab_photo" string="Photos">-->
+<!--                      <tree string="photo_article" editable="top">-->
+<!--                        <field name="s_name" modifiers="{}"/>-->
+<!--                        <field name="s_photo" options="{&quot;size&quot;:[0,270]}" widget="image"/>-->
+<!--                      </tree>-->
+<!--                    </field>-->
+<!--                  </group>-->
+<!--                </page>-->
+                <page name="onglet_modele_associe" string="Véhicules associés">
+                    <group name="group_modele_associe">
+                      <field name="s_modele_associe" widget="many2many_tags" string="Modèles"/>
+                    </group>
+                </page>
+                <page name="onglet_dossier_production" string="Dossier production">
+                  <group name="grp_button">
+                      <group name="grp_button_left">
+                        <field name="s_ligne_1_label" string="Etiquette L1"/>
+                        <field name="s_gabarit_1" string="Gabarit 1"/>
+                        <field name="s_gabarit_2" string="Gabarit 2"/>
+                        <field name="s_gabarit_3" string="Gabarit 3"/>
+                        <field name="s_mat_1" string="Matériau 1" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="s_placement_mat_1" string="Placement matériau 1"/>
+                        <field name="s_mat_2" string="Matériau 2" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="s_placement_mat_2" string="Placement matériau 2"/>
+                        <field name="s_mat_3" string="Matériau 3" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="s_placement_mat_3" string="Placement matériau 3"/>
+                        <field name="s_fil_surpiqure" string="Fil Surpiqure" domain="[['s_gabarit_materiau','=','fil']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="s_broderie_nm_fichier" string="Broderie (Nom Fichier)"/>
+                        <field name="s_abl" string="ABL"/>
+                      </group>
+                  </group>
+                </page>
+              </xpath>
+        </field>
+    </record>
+
+  <record model="ir.ui.view" id="product_product_modif_form_view">
+    <field name="name">Safar.product.product.form</field>
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='barcode']" position="after">
+          <field name="s_gabarit_materiau" invisible="1" string="Gabarit / Matériau" widget="radio"/>
+      </xpath>
+      <page name="inventory" position="after">
+        <page name="" string="Matériau" attrs="{'invisible': [('s_gabarit_materiau','!=','mat'),('s_gabarit_materiau','!=','fil')]}">
+          <group name="">
+            <group name="">
+                <field name="s_laize_cm" string="Laize (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_laize_utile" string="Laize utile (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_laize_utile_bis" string="Laize utile bis (cm)" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_accompagnement" string="Accompagnement" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_partie_centrale" string="Partie Centrale" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_ajouter_mousse" string="Ajouter de la mousse" attrs="{'invisible': [('s_gabarit_materiau','!=','mat')]}"/>
+                <field name="s_dispo_configurateur" string="disponible dans le configurateur"/>
+                <field name="s_dispo_simulateur" string="disponible dans le simulateur"/>
+                <field name="s_nom_simulateur" string="Nom d'affichage"/>
+            </group>
+            <group name="">
+              <field name="s_univers_autorises" string="Univers autorisés">
+                <tree string="univers_gabarit" editable="top">
+                  <field name="s_univers"/>
+                </tree>
+              </field>
+            </group>
+          </group>
+        </page>
+        <page name="onglet_dossier_production" string="Dossier production">
+            <group name="grp_field">
+                <group name="grp_field_left">
+                    <field name="s_ligne_1_label_pp" string="Etiquette L1"/>
+                    <field name="s_gabarit_1_pp" string="Gabarit 1"/>
+                    <field name="s_gabarit_2_pp" string="Gabarit 2"/>
+                    <field name="s_gabarit_3_pp" string="Gabarit 3"/>
+                    <field name="s_mat_1_pp" string="Matériau 1" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="s_placement_mat_1_pp" string="Placement matériau 1"/>
+                    <field name="s_mat_2_pp" string="Matériau 2" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="s_placement_mat_2_pp" string="Placement matériau 2"/>
+                    <field name="s_mat_3_pp" string="Matériau 3" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="s_placement_mat_3_pp" string="Placement matériau 3"/>
+                    <field name="s_fil_surpiqure_pp" string="Fil Surpiqure" domain="[['s_gabarit_materiau','=','fil']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                    <field name="s_broderie_nm_fichier_pp" string="Broderie (Nom Fichier)"/>
+                    <field name="s_abl_pp" string="ABL"/>
+                </group>
+            </group>
+        </page>
+      </page>
+    </field>
+  </record>
+
+  <!--Vue accessible depuis la liste des variantes d'une fiche article      -->
+  <record model="ir.ui.view" id="s_product_variant_easy_edit_view">
+      <field name="name">Safar.product_variant_easy_edit_view</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+      <field name="arch" type="xml">
+          <xpath expr="//form[1]/sheet[1]/group[2]" position="after">
+              <notebook>
+                  <page name="onglet_dossier_production" string="Dossier production">
+                      <group name="grp_field">
+                          <group name="grp_field_left">
+                              <field name="s_ligne_1_label_pp" string="Etiquette L1"/>
+                              <field name="s_gabarit_1_pp" string="Gabarit 1"/>
+                              <field name="s_gabarit_2_pp" string="Gabarit 2"/>
+                              <field name="s_gabarit_3_pp" string="Gabarit 3"/>
+                              <field name="s_mat_1_pp" string="Matériau 1" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                              <field name="s_placement_mat_1_pp" string="Placement matériau 1"/>
+                              <field name="s_mat_2_pp" string="Matériau 2" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                              <field name="s_placement_mat_2_pp" string="Placement matériau 2"/>
+                              <field name="s_mat_3_pp" string="Matériau 3" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                              <field name="s_placement_mat_3_pp" string="Placement matériau 3"/>
+                              <field name="s_fil_surpiqure_pp" string="Fil Surpiqure" domain="[['s_gabarit_materiau','=','fil']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                              <field name="s_broderie_nm_fichier_pp" string="Broderie (Nom Fichier)"/>
+                              <field name="s_abl_pp" string="ABL"/>
+                          </group>
+                      </group>
+                  </page>
+              </notebook>
+          </xpath>
+      </field>
+  </record>
+
+  <!--Ajout d'une colonne avec la ref client dans le treeview de recherche d'un product.product-->
+<!--  <record model="ir.ui.view" id="safar_product_product_tree_view">-->
+<!--    <field name="name">Safar.product.product.tree_view</field>-->
+<!--    <field name="model">product.product</field>-->
+<!--    <field name="inherit_id" ref="product.product_product_tree_view"/>-->
+<!--    <field name="arch" type="xml">-->
+<!--      <xpath expr="//field[@name='price']" position="after">-->
+<!--          <field name="s_ref_prdt_client_ctx" string="Ref Client" invisible="not context.get('pricelist',False)"/>-->
+<!--      </xpath>-->
+<!--    </field>-->
+<!--  </record>-->
+
+  <!--<template id="Safar_view_template_property_form" inherit_id="stock.view_template_property_form">
+    <xpath expr="/data[1]/group[1]/div[1]" position="after">
+      <field name="s_unite_oeuvre" string="unite oeuvre"/>
+    </xpath>
+  </template>-->
+</odoo>

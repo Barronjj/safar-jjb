@@ -1,0 +1,157 @@
+<odoo>
+    <record model="ir.ui.view" id="res_partner_modif_form_view">
+        <field name="name">Safar.res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!--On supprime l'attribut attrs afin de rendre toujours visible le champ parent_id-->
+            <xpath expr="//form[1]/sheet[1]/div[2]/div[1]/field[@name='parent_id']" position="attributes">
+                <attribute name="attrs"></attribute>
+            </xpath>
+            <!--idem pour le type de partner-->
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='type']" position="attributes">
+                <attribute name="attrs"></attribute>
+                <attribute name="groups"></attribute>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='type']" position="before">
+                <field name="s_num_client" string="N° Client SAFAR" attrs="{'readonly': [('id', '!=', False)], 'invisible': [('id', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="customer_rank" invisible="1"/>
+                <field name="supplier_rank" invisible="1"/>
+                <field name="s_id_structure_juridique" string="Structure Juridique" attrs="{&quot;invisible&quot;: [[&quot;is_company&quot;,&quot;=&quot;,False]]}"/>
+                <field name="s_nature_client" string="Nature Client" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+                <field name="s_status_client" string="Statut Client" readonly="1" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+                <field name="s_id_famille_client" string="Famille Client" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+                <field name="s_id_groupe_client" string="Groupe Client" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="s_id_client_facture" string="Client Facturé" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+                <field name="s_code_concession" string="Code Concession" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+                <field name="s_info_marque" string="Info Marques" attrs="{'invisible': [(&quot;customer_rank&quot;, &quot;=&quot;, 0), (&quot;supplier_rank&quot;, &quot;=&quot;, 1)]}"/>
+<!--                <field name="s_mail_facturation" string="Courriel facturation"/>-->
+                <button name="call_safar_config_partner"
+                        string="Configurateur SAFAR"
+                        type="object"
+                        class="btn-primary"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="inside">
+                <page name="studio_page_lz1fC" string="Divers">
+                  <group name="studio_group_lz1fC">
+                    <group name="studio_group_lz1fC_left">
+                        <field name="s_dt_envoi_depliant" string="Dt Envoi Dépliant"/>
+                        <field name="s_dt_envoi_doc" string="Dt Envoi Doc"/>
+                        <field name="s_dt_optin" string="Dt Optin"/>
+                        <field name="s_dt_optout" string="Dt Optout"/>
+                        <field name="create_date"/>
+                        <field name="create_uid"/>
+                        <field name="s_modif_date" string="Modifiée le" readonly="1"/>
+                        <field name="s_modif_user" string="Modifiée par" readonly="1"/>
+                    </group>
+                    <group name="studio_group_lz1fC_right">
+                        <field name="s_fax" string="Fax"/>
+                        <field name="s_est_un_prospect" string="Est Un Prospect" attrs="{}" readonly="1"/>
+                        <field name="s_id_gescom" string="Identifiant Gescom" attrs="{}" readonly="1"/>
+                        <field name="s_facture_par_mail" string="Envoyer facture Par Mail"/>
+                    </group>
+                  </group>
+                </page>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[2]/field[@name='mobile']" position="after">
+                <field name="self" attrs="{'invisible': [('type','!=', 'delivery')]}" string="Détail fiche"/>
+            </xpath>
+            <xpath expr="//field[@name='child_ids']/form[1]/sheet[1]/group[1]/group[2]/field[@name='mobile']" position="after">
+                <field name="s_code_concession" attrs="{'invisible': [('type','!=', 'delivery')]}" string="Code concession"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/div[2]/div[4]" position="before">
+                <div t-if="record.s_code_concession.raw_value">
+                    <field name="s_code_concession" string="Code concession"/>
+                </div>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_partner_account_modif_form_view">
+        <field name="name">Safar.res.partner.account.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='property_payment_term_id']" position="after">
+                <field name="s_nb_jr_expedition_max" string="Nb Jours Maxi pour l'expédition"/>
+                <field name="s_cd_sap" string="Cd Sap"/>
+                <field name="s_cd_facturation" string="Cd Facturation"/>
+                <field name="s_jr_facturation" string="Num Jour Facturation"/>
+                <field name="s_rib_sur_facture" domain="[('type', '=', 'bank')]"/>
+            </xpath>
+            <!--Ajout des champs de compta Safar dans l'onglet facturation-->
+            <xpath expr="//group[@name='accounting_entries']" position="after">
+                <group name="s_account_data" string="Données comptable">
+                    <field name="s_compte_sage" string="Cd Comptable Sage"/>
+                    <field name="s_mt_encours_client" string="Encours Client" readonly="1" widget="monetary"/>
+                </group>
+            </xpath>
+            <!--Affichage du BIC dans la table des comptes bancaires du client-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='accounting']/group[1]/group[@name='banks']/field[@name='bank_ids']/tree[1]/field[@name='acc_number']" position="after">
+                <field name="bank_bic" string="BIC"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="res_partner_modif_tree_view">
+        <field name="name">Safar.res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="before">
+                <field name="s_num_client" string="N° Client SAFAR"/>
+                <field name="type" string="Type Adresse"/>
+            </xpath>
+
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="street"/>
+            </xpath>
+            <xpath expr="//field[@name='city']" position="after">
+                <field name="s_code_concession"/>
+            </xpath>
+            <xpath expr="//field[@name='city']" position="attributes">
+                <attribute name="optional"/>
+            </xpath>
+        </field>
+    </record>
+ <!--   <record model="ir.ui.view" id="res_partner_modif_tree_view">
+        <field name="name">Safar.res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='display_name']" position="before">
+                <field name="s_num_client" string="N° Client SAFAR"/>
+            </xpath>
+            <xpath expr="//field[@name='display_name']" position="after">
+                <field name="street"/>
+                <xpath expr="//field[@name='city']" position="move"/>
+                    <field name="s_code_concession"/>
+            </xpath>
+            <xpath expr="//field[@name='city']" position="attributes">
+                <attribute name="optional"/>
+            </xpath>
+        </field>
+    </record>-->
+
+    <record model="ir.ui.view" id="res_partner_modif_search_view">
+        <field name="name">Safar.res.partner.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="s_num_client" string="N° client SAFAR"/>
+            </xpath>
+            <xpath expr="//field[@name='parent_id']" position="after">
+                <field name="s_code_concession"/>
+                <field name="zip"/>
+                <field name="city"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<odoo>
+    <!-- Formulaire d'une opération d'une gamme-->
+    <record model="ir.ui.view" id="s_mrp_routing_workcenter_form_view">
+        <field name="name">Safar.mrp_routing_workcenter_form_view</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='time_cycle']" position="before">
+                <field name="s_uo_percent"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Liste des opérations d'une gamme-->
+    <record model="ir.ui.view" id="s_mrp_routing_workcenter_tree_view">
+        <field name="name">Safar.mrp_routing_workcenter_tree_view</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='time_cycle']" position="before">
+                <field name="s_uo_percent"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

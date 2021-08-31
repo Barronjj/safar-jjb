@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="s_vehicule_gabarit_form_view">
+        <field name="name">Safar.s_vehicule_gabarit.form</field>
+        <field name="model">s_vehicule_gabarit</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_vehicule_gabarit">
+                  <div class="oe_title">
+                    <h1>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_vehicule" string="Véhicule"/>
+                        <field name="s_article_gabarit" string="Article Gabarit" domain="[['s_gabarit_materiau','=','gab']]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_vehicule_gabarit_tree_view">
+        <field name="name">Safar.s_vehicule_gabarit.tree</field>
+        <field name="model">s_vehicule_gabarit</field>
+        <field name="arch" type="xml">
+            <tree string="s_vehicule_gabarit">
+                <field name="s_vehicule"/>
+                <field name="s_article_gabarit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="vehicule_gabarit_action">
+        <field name="name">Gabarit</field>
+        <field name="res_model">s_vehicule_gabarit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="vehicule_gabarit_action_menu" name="Gabarits par véhicule" parent="safar_article_configuration_menu" action="vehicule_gabarit_action" sequence="30"/>
+</odoo>

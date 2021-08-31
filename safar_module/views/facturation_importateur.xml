@@ -1,0 +1,28 @@
+<odoo>
+
+    <record model="ir.ui.view" id="facturation_importateur_search_view">
+        <field name="name">Safar.facturation.importateur.search</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='salesperson']" position="before">
+                <filter string="Importateur" name="importateur" domain="[]" context="{'group_by': 'partner_invoice_id'}"/>
+                <filter string="N° Importateur" name="num_importateur" domain="[]" context="{'group_by': 's_num_clt_facture_related'}"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']" position="after">
+                <field name="s_code_concession_related" string="Cd Concession"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="facturation_importateur_list_action">
+        <field name="name">Facturation par Importateur</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain" >[('invoice_status','=','to invoice')]</field>
+        <field name="context" eval="{'search_default_importateur': 1, 'search_default_num_importateur': 2}"/>
+    </record>
+
+    <menuitem id="safar_facturation_importateur_menu" name="Commande à facturer par importateur" parent="sale.menu_sale_invoicing" action="facturation_importateur_list_action"/>
+
+</odoo>

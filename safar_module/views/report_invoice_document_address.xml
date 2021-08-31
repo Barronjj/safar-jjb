@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_invoice_address" inherit_id="sale.report_invoice_document_inherit_sale">
+        <!--On remplace la bloc addresse de livraison pour le conditionner au fait
+        que la société liée à l'adr de livr soit la même que la société facturée-->
+        <xpath expr="//address" position="after">
+            <t t-if="o.partner_shipping_id and (o.partner_shipping_id.parent_id == o.partner_id)">
+                <t t-set="information_block">
+                    <div groups="sale.group_delivery_invoice_address">
+                        <strong>Adresse de livraison:</strong>
+                        <div t-field="o.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                    </div>
+                </t>
+            </t>
+        </xpath>
+        <!--Et on supprime le bloc address ajouté par la vue parente-->
+        <t t-if="o.partner_shipping_id and (o.partner_shipping_id != o.partner_id)" position="replace"/>
+    </template>
+</odoo>

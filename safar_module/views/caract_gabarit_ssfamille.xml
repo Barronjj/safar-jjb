@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_ssfamille_form_view">
+        <field name="name">Safar.s_caract_gabarit_ssfamille.form</field>
+        <field name="model">s_caract_gabarit_ssfamille</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_caract_gabarit_ssfamille">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Libellé de la sous-famille" required="1"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_univers" string="Univers"/>
+                        <field name="s_famille" string="Famille" domain="[('s_univers','=',s_univers)]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_ssfamille_tree_view">
+        <field name="name">Safar.s_caract_gabarit_ssfamille.tree</field>
+        <field name="model">s_caract_gabarit_ssfamille</field>
+        <field name="arch" type="xml">
+            <tree string="s_caract_gabarit_ssfamille">
+                <field name="s_univers"/>
+                <field name="s_famille"/>
+                <field name="s_name" modifiers="{}" string="Sous-Famille"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gabarit_ssfamille_action">
+        <field name="name">Sous Famille</field>
+        <field name="res_model">s_caract_gabarit_ssfamille</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="gabarit_ssfamille_action_menu" name="Sous-Familles" parent="gabarit_caracteristique_main_menu" action="gabarit_ssfamille_action" sequence="20"/>
+</odoo>

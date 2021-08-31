@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report
+            id="action_report_label_sato"
+            model="mrp.production"
+            string="Etiquette Packaging (SATO)"
+            report_type="qweb-pdf"
+            name="safar_module.report_label_sato_init"
+            file="safar_module.report_label_sato_init"
+            print_report_name="'OF Label- %s' % (object.name)"
+        />
+
+        <report
+            id="action_report_label_datamax"
+            model="mrp.production"
+            string="Etiquette Packaging (DATAMAX)"
+            report_type="qweb-pdf"
+            name="safar_module.report_label_sato_init"
+            file="safar_module.report_label_sato_init"
+            print_report_name="'OF Label- %s' % (object.name)"
+        />
+
+        <record id="paperformat_sato" model="report.paperformat">
+            <field name="name">Custom SATO Paper Format</field>
+            <field name="default" eval="True" />
+            <field name="format">custom</field>
+            <field name="page_height">35</field>
+            <field name="page_width">75</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">0</field>
+            <field name="margin_left">0</field>
+            <field name="margin_right">0</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record model="ir.actions.report" id="action_report_label_datamax">
+            <field name="paperformat_id" ref="safar_module.paperformat_sato" />
+        </record>
+        <record model="ir.actions.report" id="action_report_label_sato">
+            <field name="paperformat_id" ref="safar_module.paperformat_sato" />
+        </record>
+    </data>
+</odoo>

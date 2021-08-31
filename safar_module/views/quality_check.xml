@@ -1,0 +1,39 @@
+<odoo>
+    <!--Treeview d'un contrôle qualité-->
+    <record model="ir.ui.view" id="s_mrp_workorder_view_form_inherit_workorder">
+        <field name="name">Safar.mrp_workorder_view_form_inherit_workorder</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp_workorder.mrp_workorder_view_form_inherit_workorder"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='check_ids']/tree[1]/field[@name='user_id']" position="attributes">
+                <attribute name="string">Utilisateur</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='check_ids']/tree[1]/field[@name='user_id']" position="after">
+                <field name="s_operateur" string="Opérateur"/>
+            </xpath>
+
+            <xpath expr="//field[@name='check_ids']/tree[1]/field[@name='result']" position="after">
+                <field name="s_note_operateur" string="Notes opérateur"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Formulaire d'un contrôle qualité-->
+    <record model="ir.ui.view" id="s_quality_control_quality_check_view_form">
+        <field name="name">Safar.quality_control_quality_check_view_form</field>
+        <field name="model">quality.check</field>
+        <field name="inherit_id" ref="quality_control.quality_check_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='alert_ids']" position="after">
+                <field name="s_operateur" string="Opérateur"/>
+            </xpath>
+
+            <xpath expr="//notebook[1]/page[1]/field[1]" position="after">
+                <label for="s_note_operateur" string="Notes de l'opérateur"/>
+                <field name="s_note_operateur" string="Notes opérateur" placeholder="Notes de l'opérateur"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

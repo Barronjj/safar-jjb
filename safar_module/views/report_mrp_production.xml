@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_mrp_order" inherit_id="mrp.report_mrporder">
+
+        <!--On ajoute le numéro de l'OF Gesprod-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[2]/div[1]/h2[1]" position="after">
+          <br/>
+          <strong>OF Gesprod : </strong><span t-field="o.s_of_gesprod"></span>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[2]/div[2]/span[1]/img[1]" position="after">
+            <t t-if="o.s_of_gesprod" t-set="codebarre" t-value="o.s_of_gesprod.split('-')"/>
+            <img t-if="o.s_of_gesprod" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s ' % ('Code128', codebarre[0], 600, 100)" style="width:350px;height:60px"/>
+            <img t-if="not o.s_of_gesprod" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s ' % ('Code128', o.name, 600, 100)" style="width:350px;height:60px"/>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[2]/div[2]/span[1]/img[1]" position="replace"/>
+
+
+        <!--On réduit les marges des différentes zones dans l'entête-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[3]" position="attributes">
+            <attribute name="class">row mt16 mb16</attribute>
+        </xpath>
+        <!--<xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[4]" position="attributes">
+            <attribute name="class">row mt16 mb16</attribute>
+        </xpath>-->
+
+        <!--On ajoute la date de commande et de livraison-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[3]/div[2]" position="after">
+            <div class="col-3">
+                <strong>Date Commande:</strong><br/>
+                <tr t-foreach="o.env['sale.order'].search([('name','=',o.origin)])" t-as="cde">
+                    <t t-esc="cde.date_order" t-options='{"widget": "date"}'/>
+                </tr>
+            </div>
+            <div class="col-3">
+                <strong>Date Expédition:</strong><br/>
+                <tr t-foreach="o.env['sale.order'].search([('name','=',o.origin)])" t-as="cde">
+                    <t t-if="cde.commitment_date" t-esc="cde.commitment_date" t-options='{"widget":"date", "format": "EEEE dd MMM"}'/>
+                    <t t-else="" t-esc="cde.effective_date" t-options='{"widget": "date", "format": "EEEE dd MMM"}'/>
+                </tr>
+            </div>
+        </xpath>
+
+        <!--On inverse la qté à produire et le nom du poduit pour que ce dernier ait plus de largeur-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[4]" position="after">
+            <div class="row mt16 mb16">
+                <div class="col-3">
+                    <strong>Quantité à produire:</strong><br/>
+                    <h3><span t-field="o.product_qty"/></h3>
+                    <!--<span t-field="o.product_uom_id.name" groups="uom.group_uom"/>-->
+                </div>
+                <div class="col-9">
+                    <strong>Produit Fini:</strong><br/>
+                    <span t-field="o.product_id"/>
+                </div>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[4]" position="replace"/>
+
+        <!--On ajoute le commentaire, les codes barres, la configuration et le dossier de production-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]/div[4]" position="after">
+            <div class="row mt16 mb16">
+                <div class="col-7">
+                    <h3>Commentaire</h3>
+                    <span t-field="o.s_commentaire_of"/>
+                </div>
+                <div t-if="o.s_of_gesprod" class="col-5">
+                    <t t-set="codebarre" t-value="o.s_of_gesprod.split('-')"/>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', codebarre[0] + '/1', 600, 100)" style="width:350px;height:60px"/>
+                    <div class="text-center">DECOUPE <span t-esc="codebarre[0]"/>/1</div>
+                    <br/>
+                    <br/>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', codebarre[0] + '/2', 600, 100)" style="width:350px;height:60px"/>
+                    <div class="text-center">PIQUE <span t-esc="codebarre[0]"/>/2</div>
+                </div>
+            </div>
+
+            <h3 t-if="o.move_raw_ids">
+                <t>Placements</t>
+            </h3>
+            <table class="table table-sm" t-if="o.s_tab_placement">
+                <thead>
+                    <tr>
+                        <th>Gabarit</th>
+                        <th>Matière</th>
+                        <th>Laize</th>
+                        <th>Qté</th>
+                        <th>Nom Placement</th>
+                        <th>Métrage</th>
+                        <th>Nb Epaisseurs</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="o.s_tab_placement">
+                        <tr t-foreach="o.s_tab_placement" t-as="pla_line">
+                            <td><span t-field="pla_line.s_gabarit"/></td>
+                            <td><span t-field="pla_line.s_matiere"/></td>
+                            <td><span t-field="pla_line.s_laize"/></td>
+                            <td><span t-field="pla_line.s_qte"/></td>
+                            <td><span t-field="pla_line.s_nom_placement"/></td>
+                            <td><span t-esc="'%.2f'% pla_line.s_metrage"/></td>
+                            <td><span t-field="pla_line.s_nb_epaisseur"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <div class="row mt16 mb16">
+                    <div class="col-12">
+                          <h3>Dossier Production</h3>
+                          Véhicule : <span t-field="o.s_ligne_1_label"/><br/>
+                          Gabarit 1 : <span t-field="o.s_gabarit_1"/><br/>
+                          Gabarit 2 : <span t-field="o.s_gabarit_2"/><br/>
+                          Gabarit 3 : <span t-field="o.s_gabarit_3"/><br/>
+                          Matériau 1 : <span t-field="o.s_mat_1"/><br/>
+                          Matériau 2 : <span t-field="o.s_mat_2"/><br/>
+                          Matériau 3 : <span t-field="o.s_mat_3"/><br/>
+                          Fil surpiqure : <span t-field="o.s_fil_surpiqure"/><br/>
+                          Broderie : <span t-field="o.s_broderie_nm_fichier"/><br/>
+                          Présence ABL : <span t-field="o.s_abl"/>
+                    </div>
+              </div>
+        </xpath>
+
+        <!--On place le dossier de production et la configuration sous tout le reste car moins important-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[1]/div[1]" position="after">
+              <div class="row mt16 mb16">
+                    <div class="col-12">
+                          <div t-if="o.move_dest_ids">
+                             <h3>Configuration</h3>
+                             <tr t-foreach="o.move_dest_ids" t-as="dest_line">
+                                   <span t-field="dest_line.sale_line_id.s_configuration"/>
+                             </tr>
+                          </div>
+                    </div>
+              </div>
+        </xpath>
+
+
+    </template>
+</odoo>

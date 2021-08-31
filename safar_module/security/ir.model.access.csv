@@ -1,0 +1,79 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+article_marche_system,article_marche system,safar_module.model_s_article_marche,base.group_system,1,1,1,1
+article_marche_user,article_marche user,safar_module.model_s_article_marche,base.group_user,1,0,0,0
+
+caract_gabarit_caracteristique_system,caract_gabarit_caracteristique system,safar_module.model_s_caract_gabarit_caracteristique,base.group_system,1,1,1,1
+caract_gabarit_caracteristique_user,caract_gabarit_caracteristique user,safar_module.model_s_caract_gabarit_caracteristique,base.group_user,1,0,0,0
+
+caract_gabarit_famille_system,caract_gabarit_famille system,safar_module.model_s_caract_gabarit_famille,base.group_system,1,1,1,1
+caract_gabarit_famille_user,caract_gabarit_famille user,safar_module.model_s_caract_gabarit_famille,base.group_user,1,0,0,0
+
+caract_gabarit_ssfamille_system,caract_gabarit_ssfamille system,safar_module.model_s_caract_gabarit_ssfamille,base.group_system,1,1,1,1
+caract_gabarit_ssfamille_user,caract_gabarit_ssfamille user,safar_module.model_s_caract_gabarit_ssfamille,base.group_user,1,0,0,0
+
+caract_gabarit_valeur_system,caract_gabarit_valeur_system,safar_module.model_s_caract_gabarit_valeur,base.group_system,1,1,1,1
+caract_gabarit_valeur_user,caract_gabarit_valeur_user,safar_module.model_s_caract_gabarit_valeur,base.group_user,1,0,0,0
+
+famille_client_system,famille_client system,safar_module.model_s_famille_client,base.group_system,1,1,1,1
+famille_client_user,famille_client user,safar_module.model_s_famille_client,base.group_user,1,0,0,0
+
+gabarit_lectra_system,gabarit_lectra system,safar_module.model_s_gabarit_lectra,base.group_system,1,1,1,1
+gabarit_lectra_user,gabarit_lectra user,safar_module.model_s_gabarit_lectra,base.group_user,1,0,0,0
+
+produit_client_system,produit_client system,safar_module.model_s_produit_client,base.group_system,1,1,1,1
+produit_client_user,produit_client user,safar_module.model_s_produit_client,base.group_user,1,1,1,0
+
+s_structure_juridique_system,s_structure_juridique system,safar_module.model_s_structure_juridique,base.group_system,1,1,1,1
+s_structure_juridique_user,s_structure_juridique user,safar_module.model_s_structure_juridique,base.group_user,1,0,0,0
+
+univers_gabarit_system,univers_gabarit system,safar_module.model_s_univers_gabarit,base.group_system,1,1,1,1
+univers_gabarit_user,univers_gabarit user,safar_module.model_s_univers_gabarit,base.group_user,1,0,0,0
+
+vehicule_system,vehicule system,safar_module.model_s_vehicule,base.group_system,1,1,1,1
+vehicule_user,vehicule user,safar_module.model_s_vehicule,base.group_user,1,0,0,0
+
+vehicule_finition_system,vehicule_finition system,safar_module.model_s_vehicule_finition,base.group_system,1,1,1,1
+vehicule_finition_user,vehicule_finition user,safar_module.model_s_vehicule_finition,base.group_user,1,0,0,0
+
+vehicule_gabarit_system,vehicule_gabarit system,safar_module.model_s_vehicule_gabarit,base.group_system,1,1,1,1
+vehicule_gabarit_user,vehicule_gabarit user,safar_module.model_s_vehicule_gabarit,base.group_user,1,0,0,0
+
+vehicule_generation_system,vehicule_generation system,safar_module.model_s_vehicule_generation,base.group_system,1,1,1,1
+vehicule_generation_user,vehicule_generation user,safar_module.model_s_vehicule_generation,base.group_user,1,0,0,0
+
+vehicule_marque_system,vehicule_marque system,safar_module.model_s_vehicule_marque,base.group_system,1,1,1,1
+vehicule_marque_user,vehicule_marque user,safar_module.model_s_vehicule_marque,base.group_user,1,0,0,0
+
+vehicule_modele_system,vehicule_modele system,safar_module.model_s_vehicule_modele,base.group_system,1,1,1,1
+vehicule_modele_user,vehicule_modele user,safar_module.model_s_vehicule_modele,base.group_user,1,0,0,0
+
+vehicule_serie_system,vehicule_serie system,safar_module.model_s_vehicule_serie,base.group_system,1,1,1,1
+vehicule_serie_user,vehicule_serie user,safar_module.model_s_vehicule_serie,base.group_user,1,0,0,0
+
+vehicule_univers_system,vehicule_univers system,safar_module.model_s_vehicule_univers,base.group_system,1,1,1,1
+vehicule_univers_user,vehicule_univers user,safar_module.model_s_vehicule_univers,base.group_user,1,0,0,0
+
+groupe_client_system,groupe_client system,safar_module.model_s_groupe_client,base.group_system,1,1,1,1
+groupe_client_user,groupe_client user,safar_module.model_s_groupe_client,base.group_user,1,0,0,0
+
+article_modele_associe_system,article_modele_associe system,safar_module.model_s_article_modele_associe,base.group_system,1,1,1,1
+article_modele_associe_user,article_modele_associe user,safar_module.model_s_article_modele_associe,base.group_user,1,0,0,0
+
+note_template_system,note_template system,safar_module.model_s_note_template,base.group_system,1,1,1,1
+note_template_user,note_template user,safar_module.model_s_note_template,base.group_user,1,0,0,0
+
+placement_of_system,placement_of system,safar_module.model_s_placement_of,base.group_system,1,1,1,1
+placement_of_user,placement_of user,safar_module.model_s_placement_of,base.group_user,1,0,0,0
+
+db_backup_system, db_backup system,safar_module.model_db_backup,base.group_system,1,1,1,1
+db_backup_user, db_backup user,safar_module.model_db_backup,base.group_user,1,1,1,1
+
+article_categorie_pdr_system,article_categorie_pdr system,safar_module.model_s_article_categorie_pdr,base.group_system,1,1,1,1
+article_categorie_pdr_user,article_categorie_pdr user,safar_module.model_s_article_categorie_pdr,base.group_user,1,0,0,0
+
+delai_fabrication_system,delai_fabrication system,safar_module.model_s_delai_fabrication,base.group_system,1,1,1,1
+delai_fabrication_user,delai_fabrication user,safar_module.model_s_delai_fabrication,base.group_user,1,0,0,0
+
+image_simulateur_system,image_simulateur system,safar_module.model_s_image_simulateur,base.group_system,1,1,1,1
+image_simulateur_user,image_simulateur user,safar_module.model_s_image_simulateur,base.group_user,1,0,0,0

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_safar_cancel_reservation" model="ir.cron">
+        <field name="name">Safar Cancel Reservation Planificateur</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="nextcall" eval="(datetime.now()+ timedelta(days=1)).strftime('%Y-%m-%d 01:00:00')"/>
+        <field name="doall" eval="False"/>
+<!--        <field name="model_id" ref="model_stock_move_line"/>-->
+        <field name="model_id" ref="model_procurement_group"/>
+        <field name="code">model.annuler_ligne_bl_reservee_par_planificateur()</field>
+        <field name="state">code</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

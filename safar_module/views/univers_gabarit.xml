@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_univers_gabarit_form_view">
+        <field name="name">Safar.s_univers_gabarit.form</field>
+        <field name="model">s_univers_gabarit</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_univers_gabarit">
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_univers" string="Univers"/>
+                        <field name="s_gabarit" string="Gabarit" domain="[['s_gabarit_materiau','=','gab']]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_univers_gabarit_tree_view">
+        <field name="name">Safar.s_univers_gabarit.tree</field>
+        <field name="model">s_univers_gabarit</field>
+        <field name="arch" type="xml">
+            <tree string="s_univers_gabarit">
+                <field name="s_univers"/>
+                <field name="s_gabarit"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="univers_gabarit_action">
+        <field name="name">Univers Gabarit</field>
+        <field name="res_model">s_univers_gabarit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="univers_gabarit_action_menu" name="Univers Gabarit" parent="safar_article_configuration_menu" action="univers_gabarit_action" sequence="80"/>
+</odoo>

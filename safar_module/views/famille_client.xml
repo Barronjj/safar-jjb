@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_famille_client_form_view">
+        <field name="name">Safar.s_famille_client.form</field>
+        <field name="model">s_famille_client</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_famille_client">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Nom de la famille" string="Nom"/>
+                    </h1>
+                  </div>
+                  <group name="">
+                    <group name="">
+                        <field name="s_parent_id" string="Famille mère" options="{'no_quick_create': True}"/>
+                    </group>
+                    <group name=""/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_famille_client_tree_view">
+        <field name="name">Safar.s_famille_client.tree</field>
+        <field name="model">s_famille_client</field>
+        <field name="arch" type="xml">
+            <tree string="s_famille_client">
+                <field name="s_display_name" string="Famille client"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="famille_client_action">
+        <field name="name">FamilleClient</field>
+        <field name="res_model">s_famille_client</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="famille_client_action_menu" name="Famille Client" parent="contacts.res_partner_menu_config" action="famille_client_action"/>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--Permet de modifier le modèle de fond des différents reports (logo, adresse compagnie, bas de page,...)-->
+
+<odoo>
+    <!-- Inherit quotation report (from module sale) -->
+    <template id="Safar_background_layout" inherit_id="web.external_layout_background">
+        <xpath expr="/t[1]/div[1]/div[3]/div[1]/strong[1]" position="replace"/><!--Suppr Nom Etablissement-->
+    </template>
+</odoo>

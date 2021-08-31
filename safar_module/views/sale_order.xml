@@ -1,0 +1,42 @@
+<odoo>
+    <!--Ajout d'une colonne dans le treeview-->
+    <record model="ir.ui.view" id="s_sale_order_tree_view">
+        <field name="name">Safar.sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="s_jr_facturation_related" string="Jr Facturation"/>
+                <field name="s_code_concession_related" string="Cd Concession"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Pour le champ de recherche-->
+<!--    <record model="ir.ui.view" id="s_sale_order_tree_search">-->
+<!--        <field name="name">Safar.sale.order.filter</field>-->
+<!--        <field name="model">sale.order</field>-->
+<!--&lt;!&ndash;        <field name="inherit_id" ref="sale.view_sales_order_filter"/>&ndash;&gt;-->
+<!--        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//field[@name='campaign_id']" position="after">-->
+<!--                <field name="s_code_concession_related" string="Cd Concession"/>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <!--Ajout d'une colonne avec le facturé dans les commandes à facturer-->
+    <record model="ir.ui.view" id="s_sale_order_tree_afacturer">
+        <field name="name">Safar.sale_order_afacturer</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="s_client_facture_related" string="Client facturé"/>
+                <field name="s_jr_facturation_related" string="Jr Facturation"/>
+                <field name="s_code_concession_related" string="Cd Concession"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

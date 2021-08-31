@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--Recherche depuis liste article dans module article-->
+    <record model="ir.ui.view" id="s_mrp_product_template_search_view">
+         <field name="name">Safar.mrp.product.template.search.view</field>
+         <field name="model">product.template</field>
+         <field name="inherit_id" ref="mrp.mrp_product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pricelist_id']" position="after">
+                <field name="s_modele_associe" string="Modèles associés"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Recherche depuis liste article depuis recherche avancée d'une ligne de cde-->
+    <record model="ir.ui.view" id="s_product_template_search_view">
+        <field name="name">Safar.product.template.search.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='pricelist_id']" position="after">
+                <field name="s_modele_associe" string="Modèles associés"/>
+                <!--<field name="" string="Réf. Client"/>-->
+            </xpath>
+        </field>
+    </record>
+</odoo>

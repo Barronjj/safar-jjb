@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_groupe_client_form_view">
+        <field name="name">Safar.s_groupe_client.form</field>
+        <field name="model">s_groupe_client</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_groupe_client">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Nom du groupe" string="Nom"/>
+                    </h1>
+                  </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_groupe_client_tree_view">
+        <field name="name">Safar.s_groupe_client.tree</field>
+        <field name="model">s_groupe_client</field>
+        <field name="arch" type="xml">
+            <tree string="s_groupe_client">
+                <field name="s_name" string="Groupe client"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="groupe_client_action">
+        <field name="name">GroupeClient</field>
+        <field name="res_model">s_groupe_client</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="groupe_client_action_menu" name="Groupe Client" parent="contacts.res_partner_menu_config" action="groupe_client_action"/>
+</odoo>

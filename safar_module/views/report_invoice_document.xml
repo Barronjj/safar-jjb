@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_invoice" inherit_id="account.report_invoice_document">
+        <!--On ajoute sous l'adresse du facturé, le N° de client SAFAR-->
+        <xpath expr="/t[1]/t[1]/t[2]/div[1]" position="after">
+            <br/>
+            <span>Code facturé : </span>
+            <t t-if="o.partner_id.s_num_client>0" id="div_num_client_safar" class="row mt32">
+                <span class="m-0" t-field="o.partner_id.s_num_client"/>
+            </t>
+        </xpath>
+
+        <!--On ajoute les conditions de paiement (effacées de la partie basse) à droite de la date d'échéance-->
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/div[2]" position="after">
+            <div class="col-auto mw-100 mb-2" t-if="o.invoice_payment_term_id" name="condition_paiement">
+                <strong>Condition Paiement:</strong>
+                <p class="m-0" t-field="o.invoice_payment_term_id.note"/>
+            </div>
+        </xpath>
+        <!--On modifie la police et les marges du bloc informations pour gagner de la hauteur-->
+        <xpath expr="//div[@id='informations']" position="attributes">
+            <attribute name="class">row mt22 mb22</attribute>
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+
+        <!--On définit des variables-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]" position="after">
+            <!--pour modifier le tri des lignes-->
+            <t t-set="lines" t-value="o.invoice_line_ids.sorted(key=lambda l:(l.partner_id, l.s_tri_invoice_line, str(l.s_ref_order_client), str(l.s_no_ligne_commande), l.sequence, l.date, l.move_name, -l.id),reverse=False)"/>
+            <!--pour les ruptures-->
+            <t t-set="old_s_ref_order_client" t-value=""/>
+        </xpath>
+        <!--on supprime la variable de tri existante (remplacée par celle ajoutée juste avant)-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[2]" position="replace"/>
+
+        <!--On ajoute une rupture par BL (si il existe un BL)-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]" position="before">
+            <t t-if="line.s_cde_id != old_s_cde_id and line.s_cde_id">
+                <tr style="background-color: #D3D3D3; font-size: 12px">
+                    <td colspan="99"><span>Cde : </span><strong><span t-field="line.s_cde_name"/></strong>
+                        <span>  Du : </span><strong><span t-field="line.s_cde_date" t-options='{"widget":"date"}'/></strong>
+                        <span>BL : </span><strong><span t-field="line.s_bl_name"/></strong>
+                        <span>  Du : </span><strong><span t-field="line.s_bl_date" t-options='{"widget": "date"}'/></strong>
+                        <span>Client : </span><strong><span t-field="line.s_init_client.name"/></strong>
+                        <span>Cd Concession : </span><strong><span t-field="line.s_code_concession"/></strong>
+                    </td>
+                </tr>
+            </t>
+            <t t-set="old_s_cde_id" t-value="line.s_cde_id"/>
+        </xpath>
+
+        <!--Vérif si il y a au moins un N° de ligne de renseigné dans la facture-->
+        <xpath expr="/t[1]/t[1]/div[1]/t[1]" position="after">
+            <t t-set="display_s_no_ligne_commande" t-value="any([l.s_no_ligne_commande for l in o.invoice_line_ids])"/>
+            <t t-set="display_s_ref_order_client" t-value="any([l.s_ref_order_client for l in o.invoice_line_ids])"/>
+        </xpath>
+        <!--Entêtes colonnes N° Ligne + Ref cde-->
+        <xpath expr="//th[@name='th_description']" position="before">
+            <th t-if="display_s_ref_order_client" name="th_ref_order_client" class="text-left" style="font-size: 12px">Réf Cde</th>
+            <th t-if="display_s_no_ligne_commande" name="th_num_ligne_commande" class="text-left" style="font-size: 12px">N° ligne</th>
+            <th name="th_ref_article_client" class="text-left" style="font-size: 12px">Réf Article</th>
+        </xpath>
+        <!--colonne N° Ligne + Ref Article-->
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+            <td t-if="display_s_ref_order_client" name="td_ref_order_client" class="tight" colspan="1" style="font-size: 12px"><span t-field="line.s_ref_order_client"/></td>
+            <td t-if="display_s_no_ligne_commande" name="td_num_ligne_commande" class="tight" colspan="1" style="font-size: 12px"><span t-field="line.s_no_ligne_commande"/></td>
+            <td name="td_ref_article_client" colspan="1" style="font-size: 12px"><span t-field="line.s_ref_client"/></td>
+        </xpath>
+
+        <!--On change la police des entêtes-->
+        <xpath expr="//th[@name='th_description']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_quantity']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_priceunit']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_price_unit']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <xpath expr="//th[@name='th_subtotal']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <!--...et des colonnes correspondantes-->
+        <xpath expr="//td[@name='account_invoice_line_name']" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[5]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute> <!--qté-->
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[6]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute> <!--priceunit-->
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[7]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute> <!--discount-->
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[9]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute> <!--amount-->
+        </xpath>
+
+        <!--On supprime le champ source et on masque le champ reference (car utilsé par un autre rapport) au-dessus du
+        tableau pour éviter les listes trop longues en cas de facture groupée-->
+        <!--le numéro du dernier div est supérieur de 1 car on a ajouté les conditions de paiement juste avant (voir plus haut)-->
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/div[6]" position="attributes">
+            <attribute name="hidden">true</attribute>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/div[1]/div[1]/div[4]" position="replace"/>
+        <!--Supprime l'entête et la colonne Taxe-->
+        <xpath expr="//th[@name='th_taxes']" position="replace"/>
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[8]" position="replace"/>
+        <!--Supprime l'unité dans la colonne qté-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[1]/td[5]/span[2]" position="replace"/>
+
+        <!--On modifie la police des lignes de section-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[2]/td[1]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <!--On modifie la police des lignes de notes-->
+        <xpath expr="/t[1]/t[1]/div[1]/table[1]/tbody[1]/t[4]/tr[1]/t[3]/td[1]/span[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+        <!--On modifie la police des notes de la position fiscale -->
+            <xpath expr="/t[1]/t[1]/div[1]/p[4]/span[1]" position="attributes">
+                <attribute name="style">font-size: 12px</attribute>
+                <!--<attribute name="style">font-italic</attribute>-->
+            </xpath>
+        <!--On supprime l'indication de paiement -->
+            <xpath expr="/t[1]/t[1]/div[1]/p[3]" position="replace"/>
+        <!--On supprime l'indication "Merci d'utiliser la communication suivante pour votre paiement : ..." -->
+        <xpath expr="/t[1]/t[1]/div[1]/p[1]" position="replace"/>
+
+    </template>
+</odoo>

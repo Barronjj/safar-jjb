@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="s_vehicule_modele_form_view">
+        <field name="name">Safar.s_vehicule_modele.form</field>
+        <field name="model">s_vehicule_modele</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_vehicule_modele">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" required="1" placeholder="Libellé du modèle" string="Modèle"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_marque" string="Marque"/>
+                        <field name="s_univers" string="Univers"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_vehicule_modele_tree_view">
+        <field name="name">Safar.s_vehicule_modele.tree</field>
+        <field name="model">s_vehicule_modele</field>
+        <field name="arch" type="xml">
+            <tree string="s_vehicule_modele">
+                <field name="s_name" modifiers="{}" string="Modèle de véhicule"/>
+                <field name="s_marque"/>
+                <field name="s_univers"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="s_modele_action">
+        <field name="name">Modèles</field>
+        <field name="res_model">s_vehicule_modele</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="s_modele_action_menu" name="Modèles" parent="vehicule_main_menu" action="s_modele_action" sequence="20"/>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_note_template_form_view">
+        <field name="name">Safar.s_note_template.form</field>
+        <field name="model">s_note_template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_note_template">
+                  <div>
+                      <group name="chp_note">
+                          <field name="s_titre" string="Titre" required="1"/>
+                          <field name="s_name" placeholder="Modèle de note" required="1"/>
+                      </group>
+                  </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_note_template_tree_view">
+        <field name="name">Safar.s_note_template.tree</field>
+        <field name="model">s_note_template</field>
+        <field name="arch" type="xml">
+            <tree string="s_note_template">
+                <field name="s_titre" string="Titre"/>
+                <field name="s_name" modifiers="{}" string="Modèle de note"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="safar_note_template_action">
+        <field name="name">Modèles de notes</field>
+        <field name="res_model">s_note_template</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="safar_note_template_action_menu" name="Modèles de notes" parent="sale.menu_sale_config" action="safar_note_template_action" sequence="40"/>
+</odoo>

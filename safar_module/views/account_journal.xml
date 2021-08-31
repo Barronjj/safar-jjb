@@ -1,0 +1,26 @@
+<odoo>
+    <!--Formulaire d'un compte bancaire-->
+    <record model="ir.ui.view" id="s_view_account_bank_journal_form">
+        <field name="name">Safar.view_account_bank_journal_form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_bank_journal_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]/sheet[1]/group[1]/group[1]/field[@name='bank_id']" position="after">
+                <field name="s_rib_par_defaut"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!--Liste des comptes bancaires-->
+    <record model="ir.ui.view" id="s_view_account_bank_journal_tree">
+        <field name="name">Safar.view_account_bank_journal_tree</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_bank_journal_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree[1]/field[@name='bank_acc_number']" position="after">
+                <field name="s_rib_par_defaut"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

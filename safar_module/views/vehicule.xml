@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_vehicule_form_view">
+        <field name="name">Safar.s_vehicule.form</field>
+        <field name="model">s_vehicule</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_vehicule">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" string="Nom" readonly="True"/>
+                    </h1>
+                  </div>
+                  <group name="">
+                    <group name="">
+                        <field name="s_marque" string="Marque"/>
+                        <field name="s_modele" string="Modèle" domain="[('s_marque','=',s_marque)]"/>
+                        <field name="s_generation" string="Génération" domain="[('s_modele','=',s_modele)]"/>
+                        <field name="s_serie" string="Série" domain="[('s_generation','=',s_generation)]"/>
+                        <field name="s_finition" string="Finition" domain="[('s_serie','=',s_serie)]"/>
+                    </group>
+                    <group name=""/>
+                  </group>
+                  <group name="">
+                    <field name="s_gabarits" string="Gabarits">
+                      <tree string="" editable="top">
+                        <field name="s_article_gabarit" string="Nom"/>
+                      </tree>
+                    </field>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_vehicule_tree_view">
+        <field name="name">Safar.s_vehicule.tree</field>
+        <field name="model">s_vehicule</field>
+        <field name="arch" type="xml">
+            <tree string="s_vehicule">
+                <field name="s_name" modifiers="{}" string="Véhicule"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="vehicule_action">
+        <field name="name">Vehicules</field>
+        <field name="res_model">s_vehicule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="vehicule_main_menu" name="Véhicules" parent="safar_article_configuration_menu" sequence="20"/>
+    <menuitem id="vehicule_action_menu" name="Véhicules" parent="vehicule_main_menu" action="vehicule_action" sequence="60"/>
+
+</odoo>

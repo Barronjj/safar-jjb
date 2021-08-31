@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="s_vehicule_serie_form_view">
+        <field name="name">Safar.s_vehicule_serie.form</field>
+        <field name="model">s_vehicule_serie</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_vehicule_serie">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" required="1" placeholder="Libellé de la série" string="Série"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_marque" string="Marque"/>
+                        <field name="s_modele" string="Modèle" domain="[('s_marque','=',s_marque)]"/>
+                        <field name="s_generation" string="Génération" domain="[('s_modele','=',s_modele)]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_vehicule_serie_tree_view">
+        <field name="name">Safar.s_vehicule_serie.tree</field>
+        <field name="model">s_vehicule_serie</field>
+        <field name="arch" type="xml">
+            <tree string="s_vehicule_serie">
+                <field name="s_marque"/>
+                <field name="s_modele"/>
+                <field name="s_generation"/>
+                <field name="s_name" modifiers="{}" string="Série"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="s_serie_action">
+        <field name="name">Series</field>
+        <field name="res_model">s_vehicule_serie</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="s_serie_action_menu" name="Séries" parent="vehicule_main_menu" action="s_serie_action" sequence="40"/>
+</odoo>

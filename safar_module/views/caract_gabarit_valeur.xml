@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_valeur_form_view">
+        <field name="name">Safar.s_caract_gabarit_valeur.form</field>
+        <field name="model">s_caract_gabarit_valeur</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_caract_gabarit_valeur">
+                  <group name="studio_group_97a730">
+                    <group name="studio_group_97a730_left">
+                        <field name="s_univers" string="Univers"/>
+                        <field name="s_famille" string="Famille" domain="[('s_univers','=',s_univers)]"/>
+                        <field name="s_sous_famille" string="Sous-Famille" domain="[('s_famille','=',s_famille)]"/>
+                        <field name="s_caracteristique" string="Caractéristique" domain="[('s_sous_famille','=',s_sous_famille)]"/>
+                    </group>
+                    <group name="studio_group_97a730_right">
+                        <field name="s_valeur" string="Valeur"/>
+                    </group>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_valeur_tree_view">
+        <field name="name">Safar.s_caract_gabarit_valeur.tree</field>
+        <field name="model">s_caract_gabarit_valeur</field>
+        <field name="arch" type="xml">
+            <tree string="caract_gabarit_valeur">
+                <field name="s_univers"/>
+                <field name="s_famille"/>
+                <field name="s_sous_famille"/>
+                <field name="s_caracteristique"/>
+                <field name="s_valeur"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gabarit_valeur_action">
+        <field name="name">Valeur</field>
+        <field name="res_model">s_caract_gabarit_valeur</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="gabarit_valeur_action_menu" name="Valeurs" parent="gabarit_caracteristique_main_menu" action="gabarit_valeur_action" sequence="40"/>
+</odoo>

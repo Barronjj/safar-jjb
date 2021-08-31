@@ -1,0 +1,23 @@
+<odoo>
+    <record model="ir.ui.view" id="product_pricelist_modif_form_view">
+        <field name="name">Safar.product.pricelist.form</field>
+        <field name="model">product.pricelist</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <!--<xpath expr="//field[@name='product_tmpl_id']" position="after">
+                <field name="company_id" invisible="True"/>
+            </xpath>-->
+
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='pricelist_rules']/field[@name='item_ids']/tree[1]/field[@name='date_end']" position="after">
+                <field name="s_tx_remise_facturation" string="Tx Remise Facturation"/>
+                <field name="s_ref_prdt_client" string="Ref Client"/>
+                <field name="s_lib_prdt_client" string="Lib Client"/>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='product_id']" position="after">-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='pricelist_rules']/field[@name='item_ids']/tree[1]/field[@name='min_quantity']" position="before">
+                <field name="s_ref_interne_related"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <record model="ir.ui.view" id="product_pricelist_item_modif_form_view">
+        <field name="name">Safar.product.pricelist.item.form</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="s_tx_remise_facturation" string="Tx Remise Facturation"/>
+                <field name="s_ref_prdt_client" string="Réf. Client"/>
+                <field name="s_lib_prdt_client" string="Libellé Client"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

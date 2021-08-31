@@ -1,0 +1,132 @@
+<odoo>
+    <record model="ir.ui.view" id="account_move_modif_form_view">
+        <field name="name">Safar.account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!--Permet d'ouvrir la fiche de la facture de cde lorsqu'on veut ajouter/modifier une ligne-->
+            <!--<xpath expr="//field[@name='invoice_line_ids']/tree" position="attributes">
+                <attribute name="editable" eval="False"/>
+            </xpath>-->
+
+            <!--On empêche la création ou modification via les options du Many2one-->
+            <!--always_reload et no_quick_create sont dans la vue de base-->
+            <xpath expr="//sheet[1]/group[1]/group[1]/field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'always_reload': True, 'no_quick_create': True, 'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//sheet[1]/group[1]/group[1]/field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+
+            <!--Ajout du n° de ligne et de la ref cde-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree[1]/field[@name='product_id']" position="before">
+                <field name="s_ref_order_client" string="Ref Cde" attrs="{'column_invisible': [('parent.type','!=','out_invoice')]}"/>
+                <field name="s_no_ligne_commande" string="N° Ligne" attrs="{'column_invisible': [('parent.type','!=','out_invoice')]}"/>
+                <field name="s_ref_client" string="Ref Article" attrs="{'column_invisible': [('parent.type','!=','out_invoice')]}"/>
+            </xpath>
+
+            <!--Change le tri des colonnes-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree[1]" position="attributes">
+                <attribute name="default_order">s_ref_order_client,s_no_ligne_commande, sequence, date desc, move_name desc, id</attribute>
+            </xpath>
+
+            <!--masquer la colonne product_id-->
+            <!--<xpath expr="//page/field[@name='invoice_line_ids']/tree[1]/field[@name='product_id']" position="attributes">
+                <attribute name="attrs">{'column_invisible': [('parent.type','!=','in_invoice')]}</attribute>
+            </xpath>-->
+            <!--masquer la colonne product_uom_id pour gagner de la place-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree[1]/field[@name='product_uom_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <!--Ajout du champ code concession-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/tree[1]/field[@name='name']" position="after">
+                <field name="s_code_concession" string="Concession" attrs="{'column_invisible': [('parent.type','!=','out_invoice')]}"/>
+            </xpath>
+
+            <!--On empêche la création ou modification via les options du Many2one-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/form[1]/sheet[1]/group[1]/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+
+            <!--Dans le formulaire de la ligne de facture, ajout de quelques champs-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/form[1]/sheet[1]/group[2]/field[@name='account_id']" position="before">
+                <field name="s_ref_client" string="Ref Client"/>
+                <field name="s_no_ligne_commande" string="N° Ligne"/>
+                <field name="s_ref_order_client" string="Ref Cde"/>
+                <field name="s_code_concession" string="Code Concession"/>
+            </xpath>
+
+            <!--On enlève le group qui limite la visibilité du champ discount dans la ligne de facture-->
+            <xpath expr="//page/field[@name='invoice_line_ids']/form[1]/sheet[1]/group[1]/field[@name='discount']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <field name="s_dt_export_importateur" string="Dt Export Importateur" readonly="1" attrs="{'invisible': [('type','!=','out_invoice')]}"/>
+                <field name="s_dt_export_sage" string="Dt Export Sage" readonly="1" attrs="{'invisible': [('type','!=','out_invoice')]}"/>
+                <button name="call_chercher_remise_importateur"
+                        string="Appliquer Remise Importateur"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': ['|',('type','!=','out_invoice'),('state','=','posted')]}"/>
+                <!--On ajoute un bouton pour joindre le site d'export des factures d'importateur-->
+                <button name="call_safar_export_facture_importateur"
+                        string="Export Importateur"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('type','!=','out_invoice')]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--Vue de la liste des factures accessibles depuis l'ouverture du module facturation-->
+    <record model="ir.ui.view" id="account_move_tree_view">
+        <field name="name">Safar.account.move.tree</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <!--Ajout des 2 colonnes de date d'export-->
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <field name="s_dt_export_importateur" string="Dt Exp Importateur" invisible="context.get('default_type') not in ('out_invoice','out_refund','out_receipt')"/>
+                <field name="s_dt_export_sage" string="Dt Exp Sage" invisible="context.get('default_type') not in ('out_invoice','out_refund','out_receipt')"/>
+            </xpath>
+            <!--Ajout du code du client facturé-->
+            <xpath expr="//field[@name='invoice_date']" position="before">
+                <field name="s_compte_sage_related" string="Cd Comptable Sage"/>
+                <field name="s_num_client_facture_related" string="Cd Client" invisible="context.get('default_type') not in ('out_invoice','out_refund','out_receipt')"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.server" id="safar_action_facture_importateur">
+        <field name="name">Export Importateur</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.call_safar_export_selected_factures_importateur()
+        </field>
+    </record>
+
+    <!--Recherche depuis liste facture-->
+    <record model="ir.ui.view" id="s_view_account_invoice_filter">
+         <field name="name">Safar.view_account_invoice_filter</field>
+         <field name="model">account.move</field>
+         <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <!--Ajout dans la recherche-->
+            <xpath expr="//field[@name='invoice_user_id']" position="after">
+                <field name="s_num_client_facture_related" string="Cd Client"/>
+            </xpath>
+            <!--Ajout dans le group by-->
+            <xpath expr="//group/filter[@name='status']" position="after">
+                <field name="s_num_client_facture_related" string="Cd Client" domain="[]" context="{'group_by':'s_num_client_facture_related'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

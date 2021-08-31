@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_structure_juridique_form_view">
+        <field name="name">Safar.s_structure_juridique.form</field>
+        <field name="model">s_structure_juridique</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_structure_juridique">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Libellé de la structure juridique" required="1"/>
+                    </h1>
+                  </div>
+                  <group name="">
+                    <group name=""/>
+                    <group name=""/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_structure_juridique_tree_view">
+        <field name="name">Safar.s_structure_juridique.tree</field>
+        <field name="model">s_structure_juridique</field>
+        <field name="arch" type="xml">
+            <tree string="s_structure_juridique">
+                <field name="s_name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="structure_juridique_action">
+        <field name="name">StructureJuridique</field>
+        <field name="res_model">s_structure_juridique</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="structure_juridique_action_menu" name="Structures juridiques" parent="contacts.res_partner_menu_config" action="structure_juridique_action"/>
+
+</odoo>

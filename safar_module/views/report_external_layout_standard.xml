@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_external_layout_standard" inherit_id="web.external_layout_standard">
+            <!-->On ajoute l'adresse de la compagnie, champ par champ sur 2 lignes sans le nom de la compagnie-->
+            <xpath expr="/t[1]/div[1]/div[3]/div[1]/div[1]" position="after">
+                <span t-field="company.partner_id.street"/> - <span t-field="company.partner_id.street2"/>
+                <br></br>
+                <span t-field="company.partner_id.zip"/> <span t-field="company.partner_id.city"/> - <span t-field="company.partner_id.country_id"/>
+            </xpath>
+            <!--et on supprime le bloc adresse par défaut-->
+            <xpath expr="/t[1]/div[1]/div[3]/div[1]/div[1]" position="replace"/>
+
+            <xpath expr="/t[1]/div[1]" position="attributes">
+                <attribute name="style">font-size: 12px;</attribute>
+            </xpath>
+            <xpath expr="/t[1]/div[1]/div[1]/div[1]/img[1]" position="attributes">
+                <attribute name="style">max-height: 35px;</attribute>
+            </xpath>
+            <xpath expr="/t[1]/div[3]/div[1]" position="attributes">
+                <attribute name="style">font-size: 14px; margin-bottom: -50px; padding-bottom: -50px;</attribute>
+            </xpath>
+
+           <xpath expr="/t[1]/div[3]/div[1]" position="before">
+               <div class="row mt8 mb8" style="border-top: 1px solid black;">
+                   <br></br>
+                   <div class="container">
+                       <div class="row">
+                           <div class="col-1">
+                               <img t-if="company.s_logo_certificat" t-att-src="image_data_uri(company.s_logo_certificat)" class="float-left" style="max-height: 50px;" alt="Logo"/>
+                           </div>
+                           <!--<div class="col-9 text-right" style="margin-top:22px;" t-field="company.report_header" name="moto"/>-->
+                           <div class="col-4" style="font-size: 10px">
+                               <span t-if="company.s_lib_capital_ste"><span t-field="company.s_lib_capital_ste"/><br></br></span>
+                               <!--<span t-if="company.siret">SIRET <span t-field="company.siret"/> - Code APE <span t-field="company.ape" /><br></br></span>-->
+                               <span>Siret 719200503 00014 - Code APE 1 392Z</span><br></br>
+                               <span t-if="company.company_registry"><span t-field="company.company_registry" /><br></br></span>
+                               <span t-if="company.vat"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></span>
+                           </div>
+                           <div class="col-3" style="font-size: 10px">
+                               <span t-if="o._name!='sale.order' and o._name!='account.move' and o._name!='stock.picking'">Tél : <span t-field="company.phone"/><br/></span>
+                               <span t-if="o._name=='sale.order'">Tél : <span t-field="company.s_tel_cde_devis"/><br/></span>
+                               <span t-if="o._name=='stock.picking'">Tél : <span t-field="company.s_tel_cde_devis"/><br/></span>
+                               <span t-if="o._name=='account.move'">Tél : <span t-field="company.s_tel_facture"/><br/></span>
+
+                               <span t-if="o._name!='sale.order' and o._name!='account.move' and o._name!='stock.picking'">Email : <span t-field="company.email"/><br/></span>
+                               <span t-if="o._name=='sale.order'">Email : <span t-field="company.s_email_cde_devis"/><br/></span>
+                               <span t-if="o._name=='stock.picking'">Email : <span t-field="company.s_email_cde_devis"/><br/></span>
+                               <span t-if="o._name=='account.move'">Email : <span t-field="company.s_email_facture"/><br/></span>
+
+                               <span t-if="company.website">Site : <span t-field="company.website"/></span>
+                           </div>
+                           <div t-if="o._name=='account.move'" class="col-4" style="font-size: 10px">
+                               Ref bancaires : <br></br>
+                               <!--on regarde si le partenaire à un RIB de paramétré-->
+                               <t t-if="o.partner_id.s_rib_sur_facture">
+                                  <t t-foreach="o.env['account.journal'].search([])" t-as="jr">
+                                    <t t-if="o.partner_id.s_rib_sur_facture.id == jr.id">
+                                      <span t-field="jr.bank_id.name"/><br/>
+                                      IBAN : <span t-field="jr.bank_acc_number"/><br/>
+                                      BIC : <span t-field="jr.bank_id.bic"/>
+                                    </t>
+                                </t>
+                               </t>
+                               <!--si il n'a pas de RIB paramétré alors on prend le RIB par défaut-->
+                               <t t-if="not o.partner_id.s_rib_sur_facture">
+                                <t t-foreach="o.env['account.journal'].search([])" t-as="jr">
+                                    <span t-if="jr.s_rib_par_defaut==True">
+                                      <span t-field="jr.bank_id.name"/><br/>
+                                      IBAN : <span t-field="jr.bank_acc_number"/><br/>
+                                      BIC : <span t-field="jr.bank_id.bic"/>
+                                    </span>
+                                </t>
+                               </t>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </xpath>
+           <!--Suppression du pied de page par défaut contenant téléphone, mail, ...-->
+           <xpath expr="/t[1]/div[3]/div[2]/ul" position="replace"/>
+           <!--Suppression d'une ligne financial infos qui prend le champ company.report_footer-->
+           <xpath expr="//div[@name='financial_infos']" position="replace"/>
+
+       </template>
+</odoo>

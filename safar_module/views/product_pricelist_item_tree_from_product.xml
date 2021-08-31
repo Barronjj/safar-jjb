@@ -1,0 +1,18 @@
+<odoo>
+    <record model="ir.ui.view" id="product_pricelist_item_modif_tree_view_from_product">
+        <field name="name">Safar.product.pricelist.item.tree.view.from.product</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_tree_view_from_product"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="s_tx_remise_facturation" string="Tx Remise Facturation"/>
+                <field name="s_ref_prdt_client" string="Réf. Client"/>
+                <field name="s_lib_prdt_client" string="Libellé Client"/>
+            </xpath>
+
+            <xpath expr="//field[@name='min_quantity']" position="before">
+                <field name="s_ref_interne_related"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

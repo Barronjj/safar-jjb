@@ -1,0 +1,25 @@
+<odoo>
+    <record model="ir.ui.view" id="res_company_modif_form_view">
+        <field name="name">Safar.res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="s_lib_capital_ste" string="Capital"/>
+            </xpath>
+            <xpath expr="//field[@name='favicon']" position="before">
+                <field name="s_tel_cde_devis" string="Tél Devis,Cde,BL,Proforma"/>
+                <field name="s_email_cde_devis" string="Email Devis,Cde,BL,Proforma"/>
+                <field name="s_tel_facture" string="Tél Facture,NC"/>
+                <field name="s_email_facture" string="Email Facture,NC"/>
+            </xpath>
+            <xpath expr="//field[@name='favicon']" position="after">
+                <field name="s_logo_certificat" widget="image" class="float-left oe_avatar" string="Logo Certificat"/>
+            </xpath>
+            <!--Ajout du choix de la méthode d'expédition par défaut qui sera reprise lors du create du BL-->
+            <xpath expr="//field[@name='website']" position="after">
+                <field name="s_methode_expe_par_defaut" string="Méthode d'expédition par défaut"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

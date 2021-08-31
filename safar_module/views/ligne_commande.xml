@@ -1,0 +1,281 @@
+<odoo>
+    <record model="ir.ui.view" id="sale_order_modif_form_view">
+        <field name="name">Safar.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="priority" eval="17"/>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+<!--            <xpath expr="//field[@name='partner_invoice_id']" position="before">-->
+<!--                <field name="s_id_client_facture" string="Id client facture" invisible="1"/>-->
+<!--            </xpath>-->
+            <!--on rend le champ délai de fabrication non modifiable car sa valeur est récupérée par le choix du code delai de fabrication-->
+<!--            <xpath expr="//field[@name='customer_lead']" position="attributes">-->
+<!--                 <attribute name="readonly">1</attribute>-->
+<!--             </xpath>-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">['&amp;', '|', ('company_id', '=', False), ('company_id', '=', company_id), ('parent_id','=', False)]</attribute>
+            </xpath>
+            <!--On empêche la création ou modification via les options du Many2one-->
+            <!--always_reload et no_quick_create sont dans la vue de base-->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="options">{'always_reload': True, 'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="options">{'always_reload': True, 'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="options">{'always_reload': True, 'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                <attribute name="domain">['|', '|', ('id', 'child_of', partner_id),('id', 'parent_of', partner_id),('id', '=', partner_invoice_id)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                <attribute name="context">{'default_type':'delivery', 'partner_livraison_adr': 1}</attribute>
+                <attribute name="domain">['|',('id', 'child_of', partner_id),('id', 'parent_of', partner_id)]</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="s_code_concession" string="Code concession de"
+                       domain="['&amp;', '|', ('id', 'child_of', partner_id),('id', 'parent_of', partner_id),('s_code_concession', '!=', False)]"
+                       context="{'show_code_concession': 1}"
+                       options="{'always_reload': True, 'no_create_edit': True, 'no_create': True}"/>
+                <field name="s_code_concession_related" string="Code concession"/>
+                <field name="s_configuration_exist" string="config exist" invisible="1"/>
+                <field name="s_no_ligne_commande_exist" string="lg cde exist" invisible="1"/>
+                <xpath expr="//field[@name='partner_invoice_id']" position="move"/>
+            </xpath>
+<!--            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]" position="before">-->
+<!--                <t t-set="display_s_no_ligne_commande" t-value="any([l.s_no_ligne_commande for l in doc.order_line])"/>-->
+<!--            </xpath>-->
+            <!--Masquer la colonne unité-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='product_uom']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!--Masquer la colonne taxe-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='tax_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <!--Ajouter des colonnes dans la table des lignes-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="before">
+                <field name="s_no_ligne_commande" string="N° ligne" attrs="{'column_invisible': [('parent.s_no_ligne_commande_exist', '=', False)]}"/>
+                <field name="s_ref_client" string="Article"/>
+                <!--on conserve la description complete en invisible car nécessaire pour fonction onchange-->
+<!--                <field name="s_description_complete" string="Description" invisible="1"/>-->
+                <field name="s_tx_remise_importateur" string="s_tx_remise_importateur" invisible="1"/>
+                <field name="s_mt_ht_apres_remise_importateur" string="s_mt_ht_apres_remise_importateur" invisible="1"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="after">
+                <field name="s_configuration" string="Configuration" attrs="{'column_invisible': [('parent.s_configuration_exist', '=', False)]}" />
+            </xpath>
+            <!--On masque la colonne description pour la remplacer par la colonne s_description_complete (ci-dessus)-->
+<!--            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/tree[1]/field[@name='name']" position="attributes">-->
+<!--                <attribute name="invisible">True</attribute>-->
+<!--            </xpath>-->
+
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="s_interlocuteur"
+                       string="Interlocuteur"
+                       domain="['&amp;',('id','child_of',partner_id),('type','=','contact')]"/>
+                <field name="client_order_ref"/>
+                <button name="call_safar_config_saleorder"
+                        string="Configurateur SAFAR"
+                        type="object"
+                        class="btn-primary"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/form[1]/group[1]/group[2]/div[1]" position="after">
+                <field name="s_gabarit_1" string = "Gabarit 1"/>
+                <field name="s_gabarit_2" string = "Gabarit 2"/>
+                <field name="s_gabarit_3" string = "Gabarit 3"/>
+                <field name="s_mat_1" string="Matériau 1" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                <field name="s_placement_mat_1" string="Placement matériau 1"/>
+                <field name="s_mat_2" string="Matériau 2" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                <field name="s_placement_mat_2" string="Placement matériau 2"/>
+                <field name="s_mat_3" string="Matériau 3" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                <field name="s_placement_mat_3" string="Placement matériau 3"/>
+                <field name="s_fil_surpiqure" string="Fil Surpiqure" domain="[['s_gabarit_materiau','=','fil']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                <field name="s_broderie_nm_fichier" string="Broderie (Nom Fichier)"/>
+                <field name="s_abl" string="ABL"/>
+                <button name="call_safar_config_saleorderline"
+                        string="Configurateur SAFAR"
+                        type="object"
+                        class="btn-primary"/>
+<!--                <widget name="paste-config" title="Récupérer Configuration" bg_color="bg-danger" />-->
+<!--                <templates>-->
+<!--                    <button name="click_me" string="Récupérer Configuration" class="oe_highlight"/>-->
+<!--                </templates>-->
+<!--                <button class="btn btn-primary Coller_Configuration" value="hh" type="button" title="Coller">-->
+<!--                    Coller Config-->
+<!--                </button>-->
+<!--                <button onclick="coller_config()" name="click_me" string="Récupérer Configuration" class="oe_highlight"/>-->
+<!--                <button name="click_me" id="id_click_me" string="Récupérer Configuration" class="oe_highlight"/>-->
+<!--                <button name="click_me" string="Récupérer Configuration2" class="oe_highlight"/>-->
+            </xpath>
+
+            <!--On empêche la création ou modification via les options du Many2one-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/form[1]/group[1]/group[1]/field[@name='product_id']" position="attributes">
+                <attribute name="options">{'no_create_edit': True, 'no_create': True}</attribute>
+            </xpath>
+
+            <!--Ajout de la configuration uniquement dans le cas d'une ligne de commande (hors note et section)-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/form[1]/field[@name='name']" position="after">
+                <div attrs="{'invisible': [('display_type', '!=', False)]}">
+                    <label for="name" string="Configuration"/>
+                    <field name="s_configuration" placeholder="Coller ici votre configuration"/>
+                </div>
+                <div attrs="{'invisible': [('display_type', '!=', False)]}">
+                    <label for="name" string="Commentaire production"/>
+                    <field name="s_commentaire_production" placeholder="Ajouter un commentaire de production"/>
+                </div>
+            </xpath>
+
+            <!--Ajout du choix d'un modèle de note dans le cas de la saisie d'une note-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/form[1]/group[1]" position="after">
+                <div attrs="{'invisible': [('display_type', '!=','line_note')]}">
+                    <label for="name" string="Modèles de note"/>
+                    <field name="s_modele_note"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//page/field[@name='order_line']/form[1]/group[1]/group[1]/field[@name='product_id']" position="after">
+<!--                <button name="safar_pricelist_item_action" string="Recherche par ref client" class="oe_edit_only"-->
+<!--                        type="action"/>-->
+<!--                <button name="open_search_item_pricelist_view" string="REcherche par ref client" type="object" class="btn-primary"/>-->
+                <field name="s_ref_client" string="Réf. article pour le client" readonly="False"/>
+            </xpath>
+            <!--On déplace le champ Lead Time (customer_lead)
+            <xpath expr="//page/field[@name='order_line']/form[1]/group[1]/group[1]/div[1]/field[@name='customer_lead']" position="replace"></xpath>-->
+            <!--et on le positionne après le champ discount (invisible) + le champ ligne de commande &ndash;&gt;-->
+            <xpath expr="//page/field[@name='order_line']/form[1]/group[1]/group[1]/field[@name='sequence']" position="before">
+                <!--<field name="customer_lead" />-->
+                <field name="s_no_ligne_commande" string="N° ligne"/>
+                <label for="name" string="Remise importateur"/>
+                <div name="remise_importateur" groups="product.group_discount_per_so_line">
+                    <field name="s_tx_remise_importateur" class="oe_inline"/><span> %</span>
+                </div>
+                <field name="s_mt_ht_apres_remise_importateur" string="s_mt_ht_apres_remise_importateur" invisible="1"/>
+<!--                <field name="s_description_complete" string="descr. complete" invisible="1"/>-->
+            </xpath>
+            <xpath expr="//page/field[@name='order_line']/form[1]/group[1]/group[1]/div[1]/field[@name='product_uom']" position="after">
+                <!-- widget trouvé dans la vue sale.order.line.tree.sale.stock.qty -->
+                <widget name="qty_at_date_widget" width="0.1"/>
+            </xpath>
+            <!--Permet d'ouvrir la fiche de la ligne de cde lorsqu'on veut ajouter/modifier une ligne-->
+            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+                <attribute name="editable"/>
+            </xpath>
+            <xpath expr="//field[@name='commitment_date']" position="attributes">
+                <attribute name="widget">date</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_template_id']" position="attributes">
+                <attribute name="attrs">{"readonly": [["product_updatable","=",False]], "required": [["display_type","=",False]]}</attribute>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- CODE récupéré depuis application achetée sur le store "Sale order quick MRP information" -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_manufacturing" type="object" class="oe_stat_button" icon="fa-cogs"
+                        attrs="{'invisible': [('mrp_count', '=', 0)]}" groups="mrp.group_mrp_read">
+                    <field name="mrp_count" widget="statinfo" string="Fabrication"/>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="after">
+                <page string="Ordre de fabrication" groups="mrp.group_mrp_read">
+                    <field name="sh_mrp_ids" widget="one2many_list">
+                        <tree>
+                            <field name="name" />
+                            <field name="date_planned_start" />
+                            <field name="product_id" />
+                            <field name="origin" />
+                            <field name="product_qty" />
+                            <field name="state" />
+                            <field name="company_id" />
+                            <button name="action_view_order" type="object" icon="fa-eye" class="btn btn-outline-primary btn-sm" string="View" />
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <!-- Fin du code acheté -->
+
+            <!--On cherche à enlever le champ "Reference client" qui se trouve dans l'onglet "Autres informations" (il est déplacé dans l'entête sous "Interlocuteur"
+            <notebook>
+                <page string="Other Info">
+                    <group>
+                        <group name="sales_person">
+                            <field name="client_order_ref" position="replace"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>-->
+
+        </field>
+    </record>
+
+    <!--Vue tree pour la recherche de contenu dans une liste de prix-->
+    <record model="ir.ui.view" id="s_product_pricelist_item_tree_view">
+        <field name="name">Safar.product_pricelist_item.tree</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="arch" type="xml">
+            <tree string="Price Rules">
+                <field name="pricelist_id"/>
+                <field name="name" string="Applied On"/>
+                <field name="price"/>
+                <field name="min_quantity" colspan="4"/>
+                <field name="date_start" optional="hide"/>
+                <field name="date_end" optional="hide"/>
+                <field name="s_tx_remise_facturation" string="Tx Remise Facturation"/>
+                <field name="s_ref_prdt_client" string="Ref Client"/>
+                <field name="s_lib_prdt_client" string="Lib Client"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Vue search pour la recherche de contenu dans une liste de prix-->
+    <record model="ir.ui.view" id="s_product_pricelist_item_search_view">
+        <field name="name">Safar.product_pricelist_item.search</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="arch" type="xml">
+            <search string="Toto">
+<!--                <field name="name" string="Product" filter_domain="['|', '|', '|', ('default_code', 'ilike', self), ('product_variant_ids.default_code', 'ilike', self),('name', 'ilike', self), ('barcode', 'ilike', self)]"/>-->
+                <field name="s_ref_prdt_client" string="Ref Client"/> <!--filter_domain="[('categ_id', 'child_of', raw_value)]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Services" name="services" domain="[('type','=','service')]"/>-->
+<!--                <filter string="Products" name="consumable" domain="[('type', 'in', ['consu', 'product'])]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Can be Sold" name="filter_to_sell" domain="[('sale_ok','=',True)]"/>-->
+<!--                <filter string="Can be Purchased" name="filter_to_purchase" domain="[('purchase_ok', '=', True)]"/>-->
+<!--                <separator/>-->
+<!--                <field string="Attributes" name="attribute_line_ids" groups="product.group_product_variant"/>-->
+<!--                <field name="pricelist_id" context="{'pricelist': self}" filter_domain="[]" groups="product.group_product_pricelist"/>-->
+<!--                <filter invisible="1" string="Late Activities" name="activities_overdue"-->
+<!--                    domain="[('activity_ids.date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"-->
+<!--                    help="Show all records which has next action date is before today"/>-->
+<!--                <filter invisible="1" string="Today Activities" name="activities_today"-->
+<!--                    domain="[('activity_ids.date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+<!--                <filter invisible="1" string="Future Activities" name="activities_upcoming_all"-->
+<!--                    domain="[('activity_ids.date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))-->
+<!--                    ]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Warnings" name="activities_exception"-->
+<!--                        domain="[('activity_exception_decoration', '!=', False)]"/>-->
+<!--                <separator/>-->
+<!--                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>-->
+<!--                <group expand="1" string="Group By">-->
+<!--                    <filter string="Product Type" name="type" context="{'group_by':'type'}"/>-->
+<!--                    <filter string="Product Category" name="categ_id" context="{'group_by':'categ_id'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <!--Ajout d'une action pour ouvrir la recherche dans liste de prix depuis la popup d'une ligne de cde-->
+    <record model="ir.actions.act_window" id="safar_pricelist_item_action">
+        <field name="name">Liste de prix</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.pricelist.item</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="safar_module.s_product_pricelist_item_tree_view"/>
+        <field name="search_view_id" ref="safar_module.s_product_pricelist_item_search_view"/>
+<!--        <field name="context">{"search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>-->
+    </record>
+</odoo>

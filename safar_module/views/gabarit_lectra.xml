@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_gabarit_lectra_form_view">
+        <field name="name">Safar.s_gabarit_lectra.form</field>
+        <field name="model">s_gabarit_lectra</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_gabarit_lectra">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Référence Lectra" required="1"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_gabarit" string="Gabarit" domain="[['s_gabarit_materiau', '=','gab']]"/>
+                        <field name="s_metrage" string="Métrage"/>
+                        <field name="s_quantite" string="Quantité"/>
+                    </group>
+                    <group name="studio_group_4559e3_right">
+                        <field name="s_commentaire" string="Commentaire"/>
+                    </group>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_gabarit_lectra_tree_view">
+        <field name="name">Safar.s_gabarit_lectra.tree</field>
+        <field name="model">s_gabarit_lectra</field>
+        <field name="arch" type="xml">
+            <tree string="s_gabarit_lectra">
+                <field name="s_gabarit"/>
+                <field name="s_name" modifiers="{}" string="Référence Lectra"/>
+                <field name="s_metrage"/>
+                <field name="s_quantite"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gabarit_lectra_action">
+        <field name="name">Gabarits Lectra</field>
+        <field name="res_model">s_gabarit_lectra</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="gabarit_lectra_action_menu" name="Gabarits Lectra" parent="safar_article_configuration_menu" action="gabarit_lectra_action" sequence="70"/>
+</odoo>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_image_simulateur_tree">
+        <field name="name">Safar.s_image_simulateur_tree</field>
+        <field name="model">s_image_simulateur</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="s_name"/>
+                <field name="s_univers"/>
+                <field name="s_type_vue"/>
+                <field name="s_ref_pc"/>
+                <field name="s_ref_acc"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_image_simulateur_form">
+        <field name="name">Safar.s_image_simulateur_form</field>
+        <field name="model">s_image_simulateur</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_image_simulateur">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" required="1" placeholder="Nom de l'image"/>
+                    </h1>
+                  </div>
+                  <group name="grp_name1">
+                      <group name="grp_name1_left">
+                        <field name="s_univers" string="Univers"/>
+                        <field name="s_type_vue" string="Type Vue"/>
+                      </group>
+                      <group name="grp_name1_right">
+                        <field name="s_ref_pc" string="Réf. PC"/>
+                        <field name="s_ref_acc" string="Réf. ACC"/>
+                       </group>
+                    </group>
+                    <group name="grp_name2">
+                        <field name="s_image" widget="image"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="safar_image_simulateur_action">
+        <field name="name">Images simulateur</field>
+        <field name="res_model">s_image_simulateur</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="safar_image_simulateur_action_menu" name="Images Simulateur" parent="safar_article_configuration_menu" action="safar_image_simulateur_action"/>
+</odoo>

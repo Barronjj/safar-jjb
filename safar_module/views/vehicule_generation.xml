@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_vehicule_generation_form_view">
+        <field name="name">Safar.s_vehicule_generation.form</field>
+        <field name="model">s_vehicule_generation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_vehicule_generation">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" required="1" placeholder="Libellé de la génération" string="Génération"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_dt_debut_generation" string="Dt Début génération"/>
+                        <field name="s_dt_fin_generation" string="Dt Fin Génération"/>
+                        <field name="s_marque" string="Marque"/>
+                        <field name="s_modele" string="Modèle" domain="[('s_marque','=',s_marque)]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_vehicule_generation_tree_view">
+        <field name="name">Safar.s_vehicule_generation.tree</field>
+        <field name="model">s_vehicule_generation</field>
+        <field name="arch" type="xml">
+            <tree string="s_vehicule_generation">
+                <field name="s_marque"/>
+                <field name="s_modele"/>
+                <field name="s_name" modifiers="{}" string="Génération"/>
+                <field name="s_dt_debut_generation"/>
+                <field name="s_dt_fin_generation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="s_generation_action">
+        <field name="name">Generation</field>
+        <field name="res_model">s_vehicule_generation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="s_generation_action_menu" name="Génération" parent="vehicule_main_menu" action="s_generation_action" sequence="30"/>
+</odoo>

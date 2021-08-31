@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_mrp_workcenter_productivity_tree_complet">
+        <field name="name">Safar.s_mrp_workcenter_productivity_tree_complet</field>
+        <field name="model">mrp.workcenter.productivity</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="date_end"/>
+                <field name="s_of_cd"/>
+                <field name="s_operation"/>
+                <field name="s_operateur"/>
+                <field name="s_gamme"/>
+                <field name="s_product_id"/>
+                <field name="s_qte_realisee" sum="Total Qté Réalisées"/>
+                <field name="s_uo_qte" sum="Total UOxQté"/>
+                <field name="s_duration_expected" widget="float_time" sum="Total duration"/>
+                <field name="duration" widget="float_time" sum="Total duration"/>
+                <field name="date_start"/>
+                <field name="s_commentaire"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_mrp_workcenter_productivity_pivot">
+        <field name="name">Safar.s_mrp_workcenter_productivity_pivot</field>
+        <field name="model">mrp.workcenter.productivity</field>
+        <field name="arch" type="xml">
+            <pivot string="Tâches opérateurs">
+                <field name="s_operateur" type="row"/>
+                <field name="s_gamme" type="row"/>
+                <field name="date_start" type="col"/>
+                <field name="s_qte_realisee" type="measure"/>
+                <field name="s_uo_qte" type="measure"/>
+                <field name="duration" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!--Recherche-->
+    <record model="ir.ui.view" id="s_oee_search_view">
+         <field name="name">Safar.oee_search_view</field>
+         <field name="model">mrp.workcenter.productivity</field>
+         <field name="inherit_id" ref="mrp.oee_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='loss_id']" position="after">
+                <field name="s_operateur" string="Opérateurs"/>
+                <field name="s_gamme" string="Gammes"/>
+                <field name="s_of_cd" string="OF"/>
+                <field name="s_operation" string="Opérations"/>
+                <field name="s_product_id" string="Articles"/>
+            </xpath>
+            <!--Supprimer la recherche Poste de travail en double-->
+            <xpath expr="//search/field[1]" position="replace"/>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="safar_tache_operateur_action">
+        <field name="name">Tâches opérateurs</field>
+        <field name="res_model">mrp.workcenter.productivity</field>
+        <field name="view_mode">tree,pivot</field>
+    </record>
+
+    <menuitem id="safar_tache_operateur_action_menu" name="Tâches opérateurs" parent="mrp.menu_mrp_reporting" action="safar_tache_operateur_action" sequence="11"/>
+</odoo>

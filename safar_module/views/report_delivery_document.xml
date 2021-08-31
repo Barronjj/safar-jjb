@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_delivery_document" inherit_id="stock.report_delivery_document">
+
+        <!--On remplace l'adresse de livraison pour enlever le téléphone et le
+replacer plus bas-->
+
+        <xpath expr="/t[1]/t[1]/t[1]/t[3]/t[1]/div[1]" position="after">
+          <div t-esc="partner" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+        </xpath>
+        <xpath expr="/t[1]/t[1]/t[1]/t[3]/t[1]/div[1]" position="replace"/>
+
+        <!--On augmente la taille de l'adresse de livraison pour une meilleure lisibilité-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[3]/t[1]/div[1]" position="attributes">
+            <attribute name="style">font-size: 17px</attribute>
+        </xpath>
+
+        <!--On ajoute, sous l'adresse, le téléphone du parent s'il n'y a pas de téléphone dans l'adresse de livraison-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[3]/t[1]/div[1]" position="after">
+            <br/>
+            <t t-if="not o.partner_id.phone">
+              <span t-field="o.partner_id.parent_id.phone" style="font-size: 17px"/>
+            </t>
+            <t-else>
+              <span t-field="o.partner_id.phone" style="font-size: 17px"/>
+            </t-else>
+            <!--On ajoute sous l'adresse du livré, le N° de client SAFAR-->
+            <div style="font-size: 17px"><span>Code client : </span>
+              <t t-if="o.partner_id.s_num_client>0" id="div_num_client_safar">
+                  <span class="m-0" t-field="o.partner_id.s_num_client"/>
+              </t>
+            </div>
+            <t t-if="o.sale_id.s_interlocuteur" id="div_interlocuteur" class="row mt32">
+                <t class="col-auto mw-100 mb-2">
+                    <br/>
+                    <strong>Interlocuteur :</strong>
+                    <p class="m-0" t-field="o.sale_id.s_interlocuteur.name"/>
+                    <p class="m-0" t-field="o.sale_id.s_interlocuteur_email"/>
+                </t>
+            </t>
+        </xpath>
+
+        <!--On ajoute l'adresse de facturation-->
+        <xpath expr="/t[1]/t[1]/t[1]/t[3]" position="after">
+            <t t-set="facturé" t-value="o.sale_id.partner_invoice_id or False"/>
+            <t t-if="facturé" name="facturé_header">
+              <t t-set="information_block">
+                  <br/>
+                  <strong>Adresse de facturation:</strong>
+                  <!--On ajoute sous l'adresse du facturé, le N° de client SAFAR-->
+                  <div style="font-size: 12px">
+                    <span>Client facturé : </span>
+                    <t t-if="o.sale_id.partner_invoice_id.s_num_client>0" id="div_num_client_safar">
+                        <span class="m-0" t-field="o.sale_id.partner_invoice_id.s_num_client"/>
+                    </t>
+                    <br/>
+                  </div>
+                  <div t-field="o.sale_id.partner_invoice_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True, "phone_icons": True}'/>
+                  <br/>
+              </t>
+            </t>
+        </xpath>
+
+        <!--On ajoute N° BL devant le name-->
+        <xpath expr="/t[1]/t[1]/t[1]/div[1]/h2[1]/span[1]" position="before">
+            <span>N° </span>
+        </xpath>
+
+        <xpath expr="/t[1]/t[1]/t[1]/div[1]/div[1]/div[1]" position="replace"/>
+        <xpath expr="/t[1]/t[1]/t[1]/div[1]/div[1]/div[1]" position="before">
+            <div t-if="o.origin" class="col-auto">
+                <strong>N° Commande:</strong>
+                <p t-field="o.origin"/>
+            </div>
+
+            <div>
+                <strong>Date Commande:</strong>
+                <tr t-foreach="o.env['sale.order'].search([('name','=',o.origin)])" t-as="cde">
+                  <p t-esc="cde.date_order" t-options='{"widget": "date"}'/>
+                </tr>
+            </div>
+        </xpath>
+
+        <xpath expr="/t[1]/t[1]/t[1]/div[1]/div[1]/div[3]" position="after">
+            <div t-if="o.sale_id.s_code_concession_related" class="col-auto">
+                <strong>Code Concession:</strong>
+                <p t-field="o.sale_id.s_code_concession_related"/>
+            </div>
+        </xpath>
+
+        <!--Table 1 = avant validation de BL-->
+          <!--On ajoute la colonne ref client-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[1]/thead[1]/tr[1]/th[1]" position="before">
+              <th><strong>Ref Article</strong></th>
+          </xpath>
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]" position="before">
+             <td>
+                <span t-field="move.sale_line_id.s_ref_client"/>
+              </td>
+          </xpath>
+          <!--On ajoute la 1ère ligne de la configuation sous le nom de l'article dans la table1-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="after">
+              <span t-field="move.product_id"/><br/>
+              <t t-if="move.sale_line_id.s_configuration">
+                <t t-set='conf' t-value="move.sale_line_id.s_configuration.split('\n')"/>
+                <t t-esc='conf[0]'/>
+              </t>
+          </xpath>
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[1]/tbody[1]/tr[1]/td[2]/span[1]" position="replace"/>
+          <!--On supprime l'indication unité après la qté-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[1]/tbody[1]/tr[1]/td[3]/span[2]" position="replace"/>
+
+        <!--Table 2 = après validation de BL-->
+          <!--On ajoute la colonne ref client-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[2]/thead[1]/tr[1]/th[1]" position="before">
+              <th><strong>Ref Article</strong></th>
+          </xpath>
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[1]" position="before">
+             <td>
+                <span t-field="move_line.move_id.sale_line_id.s_ref_client"/>
+              </td>
+          </xpath>
+          <!--On ajoute la 1ère ligne de la configuation sous le nom de l'article dans la table2-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[2]/span[1]" position="after">
+              <span t-field="move_line.product_id"/><br/>
+              <t t-if="move_line.move_id.sale_line_id.s_configuration">
+                <t t-set='conf' t-value="move_line.move_id.sale_line_id.s_configuration.split('\n')"/>
+                <t t-esc='conf[0]'/>
+              </t>
+          </xpath>
+         <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[2]/span[1]" position="replace"/>
+          <!--On supprime l'indication unité après la qté-->
+          <xpath expr="/t[1]/t[1]/t[1]/div[1]/table[2]/tbody[1]/tr[1]/td[5]/span[2]" position="replace"/>
+    </template>
+</odoo>

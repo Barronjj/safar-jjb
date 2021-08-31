@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="copy_btn_template">
+        <div class="mt-2 row">
+            <div class="col-sm">
+                <button class="copy_btn btn btn-primary">RECUPERER CONFIG</button>
+            </div>
+        </div>
+    </t>
+</templates>

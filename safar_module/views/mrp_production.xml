@@ -1,0 +1,120 @@
+<odoo>
+    <record model="ir.ui.view" id="s_mrp_production_form_view">
+        <field name="name">Safar.mrp.production.form</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+
+            <!--Modifie le groupe d'accès au bouton post_inventory-->
+            <xpath expr="//button[@name='post_inventory']" position="attributes">
+                <attribute name="groups">safar_module.grp_post_inventory, base.group_no_one</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='routing_id']" position="after">
+                <field name="s_of_gesprod" string="OF Gesprod"/>
+                <field name="s_unite_oeuvre" string="Unité d'oeuvre" invisible="1"/>
+                <field name="s_uo_qte" string="Unité d'oeuvre totale" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="s_of_prepare" string="Préparé"/>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]" position="before">
+                <div>
+                    <label for="name" string="Commentaire"/>
+                    <field name="s_commentaire_of"/>
+                </div>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[3]" position="after">
+                <page name="ong_workcenter_productivity" string="Ordres de travail">
+                    <field name="workorder_ids" string="Opérations">
+                        <tree create="false" editable="bottom">
+                            <field name="name"/>
+                            <field name="date_start"/>
+                            <field name="date_finished"/>
+                            <field name="qty_produced" string="Qté produite"/>
+                            <field name="qty_production" string="Qté à produire"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]" position="before">
+                <page name="ong_dossier_production" string="Dossier Production">
+                  <group name="grp_button">
+                      <group name="grp_button_left">
+                          <p><button name="button_etiq_datamax" string="Etiquette Textile (DATAMAX)" type="object" class="btn-primary" width="330"/></p><br/>
+                          <p><button name="button_etiq_sato" string="Etiquette Packaging (SATO)" type="object" class="btn-primary" width="330"/></p><br/>
+                          <p><button name="button_etiq_affichette_packaging" string="Etiquette affichette packaging" type="object" class="btn-primary" width="330"/></p><br/>
+                          <p><button name="button_notice_montage" string="Notice de montage" type="object" class="btn-primary" width="330"/></p>
+                      </group>
+                      <group name="grp_right">
+                          <field name="s_ligne_1_label" string="Etiquette L1"/>
+                          <field name="s_gabarit_1" string="Gabarit 1"/>
+                          <field name="s_gabarit_2" string="Gabarit 2"/>
+                          <field name="s_gabarit_3" string="Gabarit 3"/>
+                          <field name="s_mat_1" string="Matériau 1" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                          <field name="s_mat_2" string="Matériau 2" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                          <field name="s_mat_3" string="Matériau 3" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                          <field name="s_fil_surpiqure" string="Fil Surpiqure" domain="[['s_gabarit_materiau','=','fil']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                          <field name="s_broderie_nm_fichier" string="Broderie (Nom Fichier)"/>
+                          <field name="s_mat_type_1" string="type mat 1" invisible="1"/>
+                          <field name="s_mat_type_2" string="type mat 2" invisible="1"/>
+                          <field name="s_abl" string="ABL"/>
+                      </group>
+                  </group>
+                </page>
+                <page name="ong_placement" string="Placements">
+                    <field name="s_tab_placement" string="Placements">
+                      <tree string="Placements Lines" editable="bottom">
+                        <field name="s_gabarit" string="Gabarit"/>
+                        <field name="s_matiere" string="Matière" domain="[['s_gabarit_materiau','=','mat']]" options="{'no_create_edit': True, 'no_create': True}"/>
+                        <field name="s_type" string="Type"/>
+                        <field name="s_qte" string="Qté"/>
+                        <field name="s_laize" string="Laize"/>
+                        <field name="s_lettre" string="Lettre"/>
+                        <field name="s_metrage" string="Métrage"/>
+                        <field name="s_nb_epaisseur" string="Nb Epaisseurs"/>
+                        <field name="s_nom_placement" string="Nom Placement"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Ajout d'une colonne dans le treeview-->
+    <record model="ir.ui.view" id="s_mrp_production_modif_tree_view">
+        <field name="name">Safar.mrp.production.tree</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="s_of_gesprod" string="N° OF Gesprod"/>
+                <field name="s_of_prepare" string="Préparé"/>
+                <field name="s_gabarit_1" string="Gabarit 1" optional="hide"/>
+                <field name="s_gabarit_2" string="Gabarit 2" optional="hide"/>
+                <field name="s_gabarit_3" string="Gabarit 3" optional="hide"/>
+                <field name="s_mat_1" string="Matériau 1" optional="hide"/>
+                <field name="s_mat_2" string="Matériau 2" optional="hide"/>
+                <field name="s_mat_3" string="Matériau 3" optional="hide"/>
+                <field name="s_fil_surpiqure" string="Fil surpiqure" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="before">
+                <field name="s_unite_oeuvre" string="UO" optional="hide"/>
+                <field name="s_uo_qte" string="UOxQté" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Pour le champ de recherche-->
+    <record model="ir.ui.view" id="s_mrp_production_modif_search_view">
+        <field name="name">Safar.mrp.production.filter</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="s_of_gesprod" string="N° OF Gesprod"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

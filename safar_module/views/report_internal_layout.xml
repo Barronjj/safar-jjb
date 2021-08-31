@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_internal_layout" inherit_id="web.internal_layout">
+
+        <!--On augmente la largeur du champ contenant le nom de la compagnie pour éviter qu'il ne se mette sur 2 lignes-->
+        <xpath expr="/t[1]/div[1]/div[1]/div[2]" position="attributes">
+            <attribute name="class">"col-4 offset-2 text-center"</attribute>
+        </xpath>
+
+    </template>
+</odoo>

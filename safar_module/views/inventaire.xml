@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<!--    <record model="ir.ui.view" id="stock_valuation_tree_view">-->
+<!--        <field name="name">Safar.stock.valuation.layer.tree</field>-->
+<!--        <field name="model">stock.valuation.layer</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree>-->
+<!--                <field name="display_name"/>-->
+<!--                <field name="quantity"/>-->
+<!--                <field name="uom_id" groups="uom.group_uom"/>-->
+<!--                <field name="currency_id" invisible="1"/>-->
+<!--                <field name="value" sum="Stock_Valuation" widget="monetary"/>-->
+<!--&lt;!&ndash;                <field name="cost_method" invisible="1"/>&ndash;&gt;-->
+<!--                <button name="action_valuation_at_date_details" type="object" icon="fa-info-circle"-->
+<!--                        aria-label="Valuation" title="Valuation"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record model="ir.actions.act_window" id="inventory_value_tree_action">-->
+<!--        <field name="name">Valorisation de l'inventaire (ancienne version)</field>-->
+<!--        <field name="res_model">stock.valuation.layer</field>-->
+<!--        <field name="view_mode">tree</field>-->
+<!--    </record>-->
+
+<!--    <menuitem id="inventory_value_tree_action_menu" name="Valorisation de l'inventaire (ancienne version)"-->
+<!--              parent="stock.menu_warehouse_report" action="inventory_value_tree_action" sequence="111"/>-->
+</odoo>

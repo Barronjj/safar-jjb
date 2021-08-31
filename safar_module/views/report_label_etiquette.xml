@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+         <template id="report_label_sato">
+             <t t-call="web.html_container">
+<!--              <table style="height:30mm">-->
+                <div style="font-size: 10px">
+                 <div style="border-bottom: 1px solid black;"/>
+<!--                  <tr>-->
+<!--                    <th style="font-size: 10px">-->
+                        <!--ligne 1-->
+                        <br/><strong t-field="production.s_ligne_1_label"/><br/>
+                        <!--ligne 2-->
+                        <span>Article : </span><span t-field="production.product_id.default_code"/>
+                        <t t-if="production.s_id_ligne_cde.s_ref_client">
+                           / <span t-field="production.s_id_ligne_cde.s_ref_client"/>
+                        </t>
+                        <br/>
+                        <!--ligne 3-->
+                        <t t-if="production.s_gabarit_1">
+                          <span>Ref : </span><span t-field="production.s_gabarit_1"/>
+                        </t>
+                        <t t-if="production.s_gabarit_2">
+                           / <span t-field="production.s_gabarit_2"/>
+                        </t>
+                        <t t-if="production.s_gabarit_3">
+                           / <span t-field="production.s_gabarit_3"/>
+                        </t>
+                        <!--ligne 3bis-->
+<!--                        <t t-if="production.s_config">-->
+<!--                            <br/>-->
+<!--                            Matière : <t t-if="production.s_mat_1">-->
+<!--                              <span t-field="production.s_mat_1"/>-->
+<!--                            </t>-->
+<!--                            <t t-if="production.s_mat_2">-->
+<!--                               / <span t-field="production.s_mat_2"/>-->
+<!--                            </t>-->
+<!--                            <t t-if="production.s_mat_3">-->
+<!--                               / <span t-field="production.s_mat_3"/>-->
+<!--                            </t>-->
+<!--                        </t>-->
+                        <br/>
+                        <!--ligne 4-->
+                        <span>Fabrication : </span><span t-field="production.s_id_cde.date_order" t-options='{"format": "dd/MM/yyyy"}'/> -
+                        <span t-field="production.name"/>
+                        <br/>
+                        <!--ligne 5-->
+                        <t>
+                          <t t-if="production.s_mat_type_1 == 'Simili' or production.s_mat_type_2 == 'Simili'">
+                            <!--SIMILI-->
+                            <img t-att-src="'/safar_module/static/src/img/lavage_main.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/repassage_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/solvant_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/blanchiment_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/lavelinge_no.jpg'" style="max-height: 20px;"/>
+                          </t>
+                          <t t-elif="production.s_mat_type_1 == 'Alcane' or production.s_mat_type_2 == 'Alcane'">
+                            <!--ALCANE-->
+                            <img t-att-src="'/safar_module/static/src/img/lavage_30.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/lavage_main.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/repassage.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/solvant_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/blanchiment_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/lavelinge_no.jpg'" style="max-height: 20px;"/>
+                          </t>
+                          <t t-else="">
+                            <!--TISSU-->
+                            <img t-att-src="'/safar_module/static/src/img/lavage_30.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/repassage.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/pressing.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/blanchiment_no.jpg'" style="max-height: 20px;"/>
+                            <img t-att-src="'/safar_module/static/src/img/sechelinge.jpg'" style="max-height: 20px;"/>
+                          </t>
+                        </t>
+                        <br/>
+                        <!--ligne 6-->
+                        <u>Groupe SAFAR</u> - <u>Made in France</u>
+<!--                    </th>-->
+<!--                  </tr>-->
+<!--              </table>-->
+                </div>
+          </t>
+        </template>
+
+        <template id="report_label_sato_init">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-foreach="docs" t-as="production">
+                        <t t-call="safar_module.report_label_sato">
+                            <t t-set="production" t-value="production"/>
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

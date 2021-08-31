@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_produit_client_form_view">
+        <field name="name">Safar.s_produit_client.form</field>
+        <field name="model">s_produit_client</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_produit_client">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Libellé de l’article pour le client" string="Libellé de l’article pour le client" required="1"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_cd_produit" string="Ref. article pour le client"/>
+                        <field name="s_client" string="Client"/>
+                        <field name="s_article" string="Article"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_produit_client_tree_view">
+        <field name="name">Safar.s_produit_client.tree</field>
+        <field name="model">s_produit_client</field>
+        <field name="arch" type="xml">
+            <tree string="s_produit_client">
+                <field name="s_client"/>
+                <field name="s_article"/>
+                <field name="s_cd_produit" string="Réf. article pour le client"/>
+                <field name="s_name" modifiers="{}" string="Libellé de l'article pour le client"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="produit_client_action">
+        <field name="name">Références articles clients</field>
+        <field name="res_model">s_produit_client</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="produit_client_action_menu" name="Références Clients" parent="safar_article_configuration_menu" action="produit_client_action" sequence="60"/>
+
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_article_categorie_pdr_form_view">
+        <field name="name">Safar.s_article_categorie_pdr.form</field>
+        <field name="model">s_article_categorie_pdr</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_article_categorie_pdr">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Catégorie de PDR" required="1"/>
+                    </h1>
+                  </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_article_categorie_pdr_tree_view">
+        <field name="name">Safar.s_article_categorie_pdr.tree</field>
+        <field name="model">s_article_categorie_pdr</field>
+        <field name="arch" type="xml">
+            <tree string="s_article_categorie_pdr">
+                <field name="s_name" modifiers="{}" string="Catégorie PDR"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="safar_article_categorie_pdr_action">
+        <field name="name">Categorie PDR</field>
+        <field name="res_model">s_article_categorie_pdr</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="safar_article_categorie_pdr_action_menu" name="Catégorie PDR" parent="safar_article_configuration_menu" action="safar_article_categorie_pdr_action" sequence="40"/>
+</odoo>

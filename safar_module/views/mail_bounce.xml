@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_mail_bounce_catchall" inherit_id="mail.mail_bounce_catchall">
+        <xpath expr="/t[1]/div[1]" position="after">
+            <div>
+                <p>Bonjour ,</p>
+                <br/>
+                <p>Nous vous remercions pour votre message.</p>
+                <br/>
+                <p>Cette adresse est un e-mail automatique et ne sera pas traitée.</p>
+                <br/>
+                <p>Aussi nous vous invitons à réitérer votre demande sur <a t-att-href="'mailto:%s' % res_company.s_email_cde_devis"><t t-esc="res_company.s_email_cde_devis"/></a></p>
+                <br/>
+                <p>Bonne journée.</p>
+                <br/>
+                <p>L'équipe Safar</p>
+            </div>
+        </xpath>
+        <xpath expr="/t[1]/div[1]" position="replace"/>
+    </template>
+</odoo>
+

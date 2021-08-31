@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_caracteristique_form_view">
+        <field name="name">Safar.s_caract_gabarit_caracteristique.form</field>
+        <field name="model">s_caract_gabarit_caracteristique</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="s_caract_gabarit_caracteristique">
+                  <div class="oe_title">
+                    <h1>
+                      <field name="s_name" placeholder="Libellé de la caractéristique" required="1"/>
+                    </h1>
+                  </div>
+                  <group name="studio_group_4559e3">
+                    <group name="studio_group_4559e3_left">
+                        <field name="s_univers" string="Univers"/>
+                        <field name="s_famille" string="Famille" domain="[('s_univers','=',s_univers)]"/>
+                        <field name="s_sous_famille" string="Sous-Famille" domain="[('s_famille','=',s_famille)]"/>
+                    </group>
+                    <group name="studio_group_4559e3_right"/>
+                  </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="s_caract_gabarit_caracteristique_tree_view">
+        <field name="name">Safar.s_caract_gabarit_caracteristique.tree</field>
+        <field name="model">s_caract_gabarit_caracteristique</field>
+        <field name="arch" type="xml">
+            <tree string="s_article_marche">
+                <field name="s_univers"/>
+                <field name="s_famille"/>
+                <field name="s_sous_famille"/>
+                <field name="s_name" modifiers="{}" string="Caractéristique"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="gabarit_caracteristique_action">
+        <field name="name">Caracteristiques</field>
+        <field name="res_model">s_caract_gabarit_caracteristique</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="gabarit_caracteristique_main_menu" name="Caractéristiques de gabarit" parent="safar_article_configuration_menu" sequence="50"/>
+    <menuitem id="s_gab_caract_action_menu" name="Caractéristiques" parent="gabarit_caracteristique_main_menu" action="gabarit_caracteristique_action" sequence="30"/>
+
+</odoo>

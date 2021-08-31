@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_portal_quotation" inherit_id="sale.sale_order_portal_content">
+
+        <xpath expr="//div[@id='informations']/div[1]" position="before">
+          <strong >Votre référence : </strong><span t-field="sale_order.client_order_ref"/><br/>
+        </xpath>
+        <!--On doit ajouter la date de livraision...-->
+        <!--...pour gagner en hauteur on supprime la marge basse sous la date de cde...-->
+        <xpath expr="//div[@id='informations']/div[2]/div[1]" position="attributes">
+          <attribute name="class">col-6</attribute>
+        </xpath>
+        <!--...et sous la date d'échéance...-->
+        <xpath expr="//div[@id='informations']/div[2]/div[2]" position="attributes">
+          <attribute name="class">col-6</attribute>
+        </xpath>
+        <!--...et on ajoute la date de livraison-->
+        <xpath expr="//div[@id='informations']/div[2]" position="after">
+          <div class="row" id="so_date">
+            <div class="mb-3 col-6">
+                <strong>Date Expédition:</strong>
+                <t t-if="sale_order.commitment_date" t-esc="sale_order.commitment_date" t-options='{"widget":"date"}'/>
+                <t t-else="" t-esc="sale_order.effective_date" t-options="{'widget':'date', 'format': 'EEEE dd MMM'}"/>
+            </div>
+          </div>
+        </xpath>
+        <!--Dans les 2 sections ci-dessous, on utilise div[4] dans le xpath alors que dans le report de base, c'est le div[3]
+        Mais en fait un autre report intermédiaire (sale_stock.sale_order_portal_content_inherit_sale_stock)
+        insère un div entre temps donc on passe en div[4]-->
+        <!--On ajoute la référence client (côté gauche quand adresse livraison et facturation identique)-->
+        <!--<xpath expr="//div[@id='informations']/div[4]/div[1]/address[1]" position="after">
+          <div t-if="sale_order.partner_shipping_id == sale_order.partner_invoice_id">
+            <br/>
+            <strong >Votre référence : </strong><span t-field="sale_order.client_order_ref"/>
+          </div>
+        </xpath>-->
+        <!--On ajoute la référence client (côté droit quand adresse livraison et facturation différente)-->
+        <!--<xpath expr="/t[1]/div[2]/div[1]/div[4]/t[1]/div[1]/address[1]" position="after">
+          <br/>
+          <strong >Votre référence : </strong><span t-field="sale_order.client_order_ref"/>
+        </xpath>-->
+
+        <!--On ajoute la s_description_complete pour avoir la config et la qté sans unité-->
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[1]" position="before">
+<!--            <td name="description_complete"><span t-field="line.s_description_complete"/></td>-->
+            <td name="description complete"><span t-field="line.name"/><t t-if="line.s_configuration"><br/><span t-field="line.s_configuration"/></t></td>
+            <td name="qty" t-options-widget="integer" class="text-right"><span t-field="line.product_uom_qty"/></td>
+        </xpath>
+        <!--On supprime la qté (qui était en 2 et a donc été décalé en 4 (ajout de 2 colonnes avant))-->
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[4]" position="replace"/>
+        <!--On supprime le nom (qui était en 1 et a donc été décalé en 3 (ajout de 2 colonnes avant))-->
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[3]" position="replace"/>
+
+        <!--Supprime la colonne taxe (entête et colonne)-->
+        <xpath expr="//section[@id='details']/table[1]/thead[1]/tr[1]/th[5]" position="replace"/>
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[5]" position="replace"/>
+
+        <!--On ajoute la ref client en colonne 1 (entête et colonne-->
+        <xpath expr="//section[@id='details']/table[1]/thead[1]/tr[1]/th[1]" position="before">
+            <th class="text-left">Réf. article</th>
+        </xpath>
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[1]/td[1]" position="before">
+            <td id="ref_article"><span t-field="line.s_ref_client"/></td>
+        </xpath>
+        <!--On supprime la mise en italique des notes-->
+        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]" position="attributes">
+            <attribute name="t-att-class">'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else ''</attribute>
+        </xpath>
+        <!--Et on met les notes dans la même police que les lignes d'articles-->
+<!--        <xpath expr="//section[@id='details']/table[1]/tbody[1]/t[2]/tr[1]/t[3]/td[1]" position="before">-->
+<!--            <attribute name="style">font-size: 12px</attribute>-->
+<!--        </xpath>-->
+    </template>
+</odoo>

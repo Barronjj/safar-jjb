@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="Safar_report_address_layout" inherit_id="web.address_layout">
+
+        <!--On diminue la police des adresses en entête pour gagner de la place-->
+        <xpath expr="/t[1]/t[2]/div[1]" position="attributes">
+            <attribute name="style">font-size: 12px</attribute>
+        </xpath>
+
+    </template>
+</odoo>
