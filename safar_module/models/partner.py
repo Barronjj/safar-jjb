@@ -48,6 +48,10 @@ class Partner(models.Model):
                                                    ('29', '29'), ('30', '30'), ('31', '31')], string="Num Jour Facturation")
     s_rib_sur_facture = fields.Many2one('account.journal', string="RIB sur facture")
 
+    s_code_edi_1 = fields.Char(string="Code EDI 1")
+    s_code_edi_2 = fields.Char(string="Code EDI 2")
+    s_code_edi_3 = fields.Char(string="Code EDI 3")
+
     @api.model
     def create(self, values):
         # Atribution du s_num_client : Max num_client +1

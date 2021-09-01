@@ -82,6 +82,14 @@
                         type="object"
                         class="btn-primary"/>
             </xpath>
+
+            <!--Ajout du champ s_edi_data visible uniquement en mode debug-->
+            <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='other_information']/group[2]" position="after">
+                <group>
+                    <field name="s_edi_data" groups="base.group_no_one"/>
+                </group>
+            </xpath>
+
             <xpath expr="//form[1]/sheet[1]/notebook[1]/page[@name='order_lines']/field[@name='order_line']/form[1]/group[1]/group[2]/div[1]" position="after">
                 <field name="s_gabarit_1" string = "Gabarit 1"/>
                 <field name="s_gabarit_2" string = "Gabarit 2"/>
@@ -125,6 +133,10 @@
                 <div attrs="{'invisible': [('display_type', '!=', False)]}">
                     <label for="name" string="Commentaire production"/>
                     <field name="s_commentaire_production" placeholder="Ajouter un commentaire de production"/>
+                </div>
+                <!--Ajout du champ s_edi_data visible uniquement en mode debug-->
+                <div attrs="{'invisible': [('display_type', '!=', False)]}" groups="base.group_no_one"><label for="name" string="Données EDI"/>
+                    <field name="s_edi_data" placeholder="Ajouter les données EDI"/>
                 </div>
             </xpath>
 

@@ -16,6 +16,7 @@ class SaleOrder(models.Model):
     s_no_ligne_commande_exist = fields.Boolean(compute="compute_no_ligne_commande_existe", store="True", string="Présence d'un n° de ligne dans la cde")
     s_num_clt_facture_related = fields.Integer(related="partner_invoice_id.s_num_client", store="False")
     s_jr_facturation_related = fields.Selection(related="partner_invoice_id.s_jr_facturation", store="False", string="Num Jr Facturation")
+    s_edi_data = fields.Text(string="Données EDI")
 
     """CODE récupéré depuis application achetée sur le store 'Sale order quick MRP information'"""
     sh_mrp_ids = fields.Many2many(
