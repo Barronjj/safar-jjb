@@ -53,6 +53,9 @@
                         <field name="s_est_un_prospect" string="Est Un Prospect" attrs="{}" readonly="1"/>
                         <field name="s_id_gescom" string="Identifiant Gescom" attrs="{}" readonly="1"/>
                         <field name="s_facture_par_mail" string="Envoyer facture Par Mail"/>
+                        <field name="s_code_edi_1" groups="base.group_no_one"/>
+                        <field name="s_code_edi_2" groups="base.group_no_one"/>
+                        <field name="s_code_edi_3" groups="base.group_no_one"/>
                     </group>
                   </group>
                 </page>

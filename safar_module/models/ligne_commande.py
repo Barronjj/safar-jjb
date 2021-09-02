@@ -29,6 +29,7 @@ class LigneCommande(models.Model):
     s_mt_ht_apres_remise_importateur = fields.Monetary(string="mt HT après remise pour stat")
     s_commentaire_production = fields.Text()
     s_abl = fields.Selection(selection=[('oui', 'Oui'), ('non', 'Non')])
+    s_edi_data = fields.Text(string="Données EDI")
 
     # @api.depends('product_template_id.s_tab_references_client', 'order_partner_id')
     # def _compute_ref_client(self):
@@ -98,6 +99,8 @@ class LigneCommande(models.Model):
 
     @api.onchange('product_id')
     def init_dossier_production(self):
+        # on vide la champ configuration
+        self.s_configuration = ""
         # On regarde dans le product.template
         if self.product_template_id:
             self.s_gabarit_1 = self.product_template_id.s_gabarit_1
