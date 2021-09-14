@@ -82,6 +82,7 @@
         'views/report_saleorder_document.xml',
         'views/report_external_layout_standard.xml',
         'views/sale_order.xml',
+        'views/stock_picking.xml',
         'views/structure_juridique.xml',
         'views/univers_gabarit.xml',
         'views/vehicule.xml',

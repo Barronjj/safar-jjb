@@ -90,11 +90,11 @@ class SaleOrder(models.Model):
             is_eu_country = self.is_eu_country_ept(origin_country_id)
             context.update({'is_amazon_fpos':is_amz_customer,'is_bol_fiscal_position':is_bol_customer,
                             'force_company': warehouse.company_id.id})
-            if is_eu_country:
-                context.update({'origin_country_ept': origin_country_id})
-            fiscal_position = self.env['account.fiscal.position'].with_context(context).get_fiscal_position(
-                    self.partner_id.id, self.partner_shipping_id.id)
-            self.fiscal_position_id = fiscal_position
+            # if is_eu_country:
+            #     context.update({'origin_country_ept': origin_country_id})
+            # fiscal_position = self.env['account.fiscal.position'].with_context(context).get_fiscal_position(
+            #         self.partner_id.id, self.partner_shipping_id.id)
+            # self.fiscal_position_id = fiscal_position
         return res
 
     @api.onchange('warehouse_id')
@@ -112,11 +112,11 @@ class SaleOrder(models.Model):
             is_eu_country = self.is_eu_country_ept(origin_country_id)
             context.update({'is_amazon_fpos':is_amz_customer,'is_bol_fiscal_position':is_bol_customer,
                             'force_company': warehouse.company_id.id})
-            if is_eu_country:
-                context.update({'origin_country_ept': origin_country_id})
-            fiscal_position_id = self.env['account.fiscal.position'].with_context(context).get_fiscal_position(
-                    self.partner_id.id, self.partner_shipping_id.id)
-            self.fiscal_position_id = fiscal_position_id
+            # if is_eu_country:
+            #     context.update({'origin_country_ept': origin_country_id})
+            # fiscal_position_id = self.env['account.fiscal.position'].with_context(context).get_fiscal_position(
+            #         self.partner_id.id, self.partner_shipping_id.id)
+            # self.fiscal_position_id = fiscal_position_id
 
     def _prepare_invoice(self):
         """This function is used to set global channel in account.move when create regular invoice
