@@ -18,7 +18,7 @@
     "website": "https://github.com/OCA/bank-payment",
     "category": "Banking addons",
     "external_dependencies": {"python": ["lxml"]},
-    "depends": ["account_payment_partner", "base_iban", "account"],  # for manual_bank_tranfer
+    "depends": ["account_payment_partner", "base_iban", "account", 'sale', 'base', 'contacts', 'product'],  # for manual_bank_tranfer
     "data": [
         "views/account_payment_method.xml",
         "security/payment_security.xml",
