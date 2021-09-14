@@ -12,7 +12,7 @@
     "summary": "Adds payment mode on partners and invoices",
     "author": "Akretion, Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-payment",
-    "depends": ["account_payment_mode", "account", 'sale', 'base', 'contacts', 'product'],
+    "depends": ["account_payment_mode", "account", 'sale', 'base', 'contacts', 'product', 'l10n_fr'],
     "data": [
         "views/res_partner_view.xml",
         "views/account_move_view.xml",

@@ -12,7 +12,7 @@
     "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/l10n-france",
     "category": "French localisation",
-    "depends": ["account_payment_order", "account", 'sale', 'base', 'contacts', 'product'],
+    "depends": ["account_payment_order", "account", 'sale', 'base', 'contacts', 'product', 'l10n_fr'],
     "external_dependencies": {"python": ["unidecode"]},
     "data": ["data/account_payment_method.xml"],
     "demo": ["demo/lcr_demo.xml"],
