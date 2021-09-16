@@ -44,15 +44,9 @@ class SaleOrder(models.Model):
                                                  ('id', 'child_of', self.partner_id.id)],
                                                 limit=1)
         self.s_code_concession = search if search else self.partner_invoice_id"""
-        self.payment_term_id = self.partner_invoice_id.s_id_client_facture.property_payment_term_id \
-            if self.partner_invoice_id.s_id_client_facture.property_payment_term_id \
-            else self.partner_invoice_id.property_payment_term_id
-        self.pricelist_id = self.partner_invoice_id.s_id_client_facture.property_product_pricelist \
-            if self.partner_invoice_id.s_id_client_facture.property_product_pricelist \
-            else self.partner_invoice_id.property_product_pricelist
-        self.fiscal_position_id = self.partner_invoice_id.s_id_client_facture.property_account_position_id \
-            if self.partner_invoice_id.s_id_client_facture.property_account_position_id \
-            else self.partner_invoice_id.property_account_position_id
+        self.payment_term_id = self.partner_invoice_id.property_payment_term_id
+        self.pricelist_id = self.partner_invoice_id.property_product_pricelist
+        self.fiscal_position_id = self.partner_invoice_id.property_account_position_id
 
     @api.onchange('s_code_concession')
     def onchange_s_code_concession(self):
@@ -85,18 +79,7 @@ class SaleOrder(models.Model):
         addr = self.partner_id.address_get(['delivery', 'invoice', 'contact'])
         partner_user = self.partner_id.user_id or self.partner_id.commercial_partner_id.user_id
         values = {
-            # 'pricelist_id': self.partner_invoice_id.property_product_pricelist or self.partner_id.property_product_pricelist and self.partner_id.property_product_pricelist.id or False,
-            # 'pricelist_id': self.partner_id.s_id_client_facture.property_product_pricelist
-            # if self.partner_id.s_id_client_facture.property_product_pricelist
-            # else self.partner_id.property_product_pricelist,
-            # 'payment_term_id': self.partner_id.s_id_client_facture.property_payment_term_id
-            # if self.partner_id.s_id_client_facture.property_payment_term_id
-            # else self.partner_id.property_payment_term_id,
-            # 'partner_invoice_id': self.partner_id.s_id_client_facture if self.partner_id.s_id_client_facture else addr['invoice'],
-            # 'partner_shipping_id': addr['delivery'],
-            # 's_code_concession': self.partner_id,
             'partner_shipping_id': addr['contact'],
-            # 's_code_concession': self.partner_shipping_id if self.partner_shipping_id else False,
             'payment_term_id':
                 self.partner_invoice_id.property_payment_term_id if
                 self.partner_invoice_id.property_payment_term_id else
