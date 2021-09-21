@@ -1,0 +1,24 @@
+<odoo>
+    <record model="ir.ui.view" id="s_view_quant_package_weight_form">
+        <field name="name">safar.view.quant.package.weight.form</field>
+        <field name="model">stock.quant.package</field>
+        <field name="priority" eval="17"/>
+        <field name="inherit_id" ref="delivery.view_quant_package_weight_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='Shipping Weight']/span[3]" position="after">
+                <script type="text/javascript">
+                        function Recuperer_Poids(){
+                            navigator.clipboard.readText()
+                                .then(clipText => {
+                                    document.getElementsByName("shipping_weight")[0].value = clipText;
+                                    document.getElementsByName("shipping_weight")[0].dispatchEvent(new Event('change'));
+                                    });
+                        }
+
+                </script>
+                <button name="button" onclick="Recuperer_Poids()" string="PESER" class="oe_highlight"/>
+            </xpath>
+        </field>
+     </record>
+</odoo>

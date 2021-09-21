@@ -1,0 +1,26 @@
+<odoo>
+    <record model="ir.ui.view" id="s_choose_delivery_package_form">
+
+        <field name="name">safar.choose.delivery.package.form</field>
+        <field name="model">choose.delivery.package</field>
+        <field name="priority" eval="17"/>
+        <field name="inherit_id" ref="delivery.choose_delivery_package_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[1]/div[1]/field[@name='weight_uom_name']" position="after">
+                <script type="text/javascript">
+                        function Recuperer_Poids(){
+                            navigator.clipboard.readText()
+                                .then(clipText => {
+                                    <!--On met [1] car il existe un 1er champ shipping_weight dans la page (onglet info complémentaires) qui a la position [0]-->
+                                    document.getElementsByName("shipping_weight")[1].value = clipText;
+                                    document.getElementsByName("shipping_weight")[1].dispatchEvent(new Event('change'));
+                                    });
+                        }
+
+                </script>
+                <button name="button" onclick="Recuperer_Poids()" string="PESER" class="oe_highlight"/>
+            </xpath>
+        </field>
+     </record>
+</odoo>
