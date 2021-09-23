@@ -10,9 +10,20 @@ class AccountMove(models.Model):
     s_dt_export_sage = fields.Date(copy=False)
     s_num_client_facture_related = fields.Integer(related="partner_id.s_num_client", string="Cd Client", store="false")
     s_compte_sage_related = fields.Char(related="partner_id.s_compte_sage", string="Compte Tiers")
+    # on surcharge le champ existant invoice_user_id pour éviter qu'il ne prenne par défaut l'utilisateur en cours
+    # sinon, on le retrouve en tant qu'expé dans le mail d'envoi de la facture au lieu de celui qui a facturé
+    invoice_user_id = fields.Many2one('res.users', copy=False, tracking=True,
+                                      string='Salesperson')
 
+    # Parmi les champs que l'on veut alimenter dans la ligne de facture, l'un comportait au début une fonction compute
+    # Lorsqu'on crée une facture issue d'une cde, pas de problème, on ramène bien les valeurs dans les nouveaux champs
+    # Par contre, pour une facture manuelle, comme il n'y a pas de ligne de cde associée, cela mettait tous les champs
+    # à blanc alors qu'on les avaient renseignés manuellement
+    # Du coup, on passe par une surcharge des fonctions create et write que l'on distingue selon que c'est une facture
+    # manuelle ou issue d'une cde
     @api.model
     def create(self, vals):
+        #vals["invoice_user_id"] = 0 # on enlève le vendeur pour toujours avoir en expéditeur, l'utilisateur qui crée la facture (Mantis 1192)
         if vals.get("invoice_origin"):
             return self.create_from_so(vals)
         else:

@@ -98,8 +98,10 @@
                             <td><span t-field="pla_line.s_laize"/></td>
                             <td><span t-field="pla_line.s_qte"/></td>
                             <td><span t-field="pla_line.s_nom_placement"/></td>
-                            <td><span t-esc="'%.2f'% pla_line.s_metrage"/></td>
-                            <td><span t-field="pla_line.s_nb_epaisseur"/></td>
+                            <td t-if = "pla_line.s_metrage != 0"><span t-esc="'%.2f'% pla_line.s_metrage"/></td>
+                            <td t-if = "pla_line.s_metrage == 0"></td>
+                            <td t-if = "pla_line.s_nb_epaisseur != 0"><span t-field="pla_line.s_nb_epaisseur"/></td>
+                            <td t-if = "pla_line.s_nb_epaisseur == 0"></td>
                         </tr>
                     </t>
                 </tbody>
